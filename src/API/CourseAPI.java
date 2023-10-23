@@ -58,8 +58,8 @@ public class CourseAPI {
          * Returns a HashMap
          * Sample return
          * -> {CSC207H1 -F=
-         *      {LEC5101=[{Start=64800000, endtime=4, Day=4, building=KP}],
-         *      LEC0501=[{Start=57600000, endtime=2, Day=2, building=BA}, {Start=57600000, endtime=4, Day=4, building=BA}]}
+         *      {LEC5101=[{Start=64800000, endtime=72000000, Day=4, building=KP}],
+         *      LEC0501=[{Start=57600000, endtime=61200000, Day=2, building=BA}, {Start=57600000, endtime=4, Day=4, building=BA}]}
          */
 
         JSONObject courseinfo = getCourseInfoRaw(course);
@@ -84,7 +84,7 @@ public class CourseAPI {
             for (int k = 0; k< times.length(); k++){
                 Integer day = (Integer) ((JSONObject) times.get(k)).getJSONObject("start").get("day");
                 Integer starttime = (Integer) ((JSONObject) times.get(k)).getJSONObject("start").get("millisofday");
-                Integer endtime = (Integer) ((JSONObject) times.get(k)).getJSONObject("end").get("day");
+                Integer endtime = (Integer) ((JSONObject) times.get(k)).getJSONObject("end").get("millisofday");
                 String building = ((JSONObject) times.get(k)).getJSONObject("building").getString("buildingCode");
 
 
