@@ -1,0 +1,10 @@
+.getcourse("CSC207H1 -F")
+
+Returns a dictionary of the form:
+
+{CSC207H1 -F=
+    {LEC5101=[{Start=64800000, endtime=72000000, Day=4, building=KP}],
+     LEC0501=[{Start=57600000, endtime=61200000, Day=2, building=BA},
+              {Start=57600000, endtime=61200000, Day=4, building=BA}],
+     LEC0301=[{Start=50400000, endtime=54000000, Day=2, building=UC}],
+     TUT0501=[{Start=32400000, endtime=39600000, Day=4, building=}]}}
