@@ -27,6 +27,16 @@ public class Course {
         }
     }
 
+    public List<Session> getLecSessions(){
+        return lecSessions;
+    }
+
+    public List<Session> getTutSessions(){
+        return tutSessions;
+    }
+    public List<Session> getPraSessions(){
+        return praSessions;
+    }
     public boolean hasPra(){
         /**
          * return True if there are PRActical sessions for this course
