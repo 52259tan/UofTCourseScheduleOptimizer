@@ -25,10 +25,16 @@ public class Session {
         }
 
     }
+    public List<String> getBuildingCode(){
+        return this.buildingCode;
+    }
+    public List<String> getAddress(){
+        return this.address;
+    }
     public void setSessionCode(String sessionCode){
         this.sessionCode = sessionCode;
     }
-    public String buildingCodeToAddress(String buildingCode){
+    private String buildingCodeToAddress(String buildingCode){
         String fileName = "./src/codetoaddress.txt"; // Replace with your file path
         try {
             File myObj = new File(fileName);
