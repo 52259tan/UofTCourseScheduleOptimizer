@@ -1,4 +1,4 @@
-import API.CourseAPI;
+package Course;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,3 +1,5 @@
+package Course;
+
 import java.io.*;
 import java.util.*;
 
@@ -36,6 +38,7 @@ public class Session {
     }
     private String buildingCodeToAddress(String buildingCode){
         String fileName = "./src/codetoaddress.txt"; // Replace with your file path
+        final String postfix = ", Toronto, Ontario, Canada";
         try {
             File myObj = new File(fileName);
             Scanner reader = new Scanner(myObj);
@@ -44,7 +47,7 @@ public class Session {
                 parts = reader.nextLine().split(":");
                 if (parts[0].equals(buildingCode)) {
                     reader.close();
-                    return parts[1];
+                    return parts[1] + postfix;
                 }
             }
             reader.close();

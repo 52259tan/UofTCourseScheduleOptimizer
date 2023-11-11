@@ -1,4 +1,4 @@
-package org.example;
+package API;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,41 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GoogleMapsAPI {
-    private ArrayList<String> origins;
-    private ArrayList<String> destinations;
-    private String mode;
 
-    public GoogleMapsAPI(){
-        origins = new ArrayList<String>();
-        destinations = new ArrayList<String>();
-        setMode(0);
-    }
-
-    public void addOrigin(String address) {
-        origins.add(address);
-    }
-
-    public void addDestination(String address) {
-        destinations.add(address);
-    }
-
-    public void clearOriginsDestinations() {
-        origins.clear();
-        destinations.clear();
-    }
-
-    public void setMode(int id) {
-        switch (id) {
-            case 0: // Walking
-                mode = "walking";
-                break;
-            case 1: // Transit
-                mode = "transit";
-                break;
-        }
-    }
-
-    private String encodeLocations(ArrayList<String> locations) {
+    private static String encodeLocations(ArrayList<String> locations) {
         StringBuilder formattedString = new StringBuilder();
 
         for (int i = 0; i < locations.size(); i++) {
@@ -56,10 +23,12 @@ public class GoogleMapsAPI {
         return formattedString.toString();
     }
 
-    public void GetDistanceMatrix() {
+    public static ArrayList<ArrayList<String>> get(ArrayList<String> origins, ArrayList<String> destinations, String mode) {
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=%s&units=metric&key=%s";
         final String API_KEY = "AIzaSyA8W-ukR4bacqWfzy4kT0MSn52V-Y_kk0E";
+
+        ArrayList<ArrayList<String>> results = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -69,7 +38,7 @@ public class GoogleMapsAPI {
         try {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
-            System.out.println(responseBody);
+            //System.out.println(responseBody);
 
             JSONArray resultDestinations =
                     responseBody.getJSONArray("destination_addresses");
@@ -82,15 +51,22 @@ public class GoogleMapsAPI {
                 JSONObject elements = rows.getJSONObject(i);
                 JSONArray elementsArray = elements.getJSONArray("elements");
 
+
                 for (int j = 0; j < elementsArray.length(); j++) {
+                    ArrayList<String> resultPair = new ArrayList<>();
                     JSONObject element = elementsArray.getJSONObject(j);
+                    JSONObject distance = element.getJSONObject("distance");
+                    String distanceValue = distance.getString("text");
                     JSONObject duration = element.getJSONObject("duration");
-                    System.out.println(duration);
-                    String durationTime = duration.getString("text");
-                    System.out.printf("From %s to %s:\nTravel time (%s): %s%n",
-                            resultOrigins.getString(i), resultDestinations.getString(j), mode, durationTime);
+                    String durationValue = duration.getString("text");
+
+                    resultPair.add(distanceValue);
+                    resultPair.add(durationValue);
+
+                    results.add(resultPair);
                 }
             }
+            return results;
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
