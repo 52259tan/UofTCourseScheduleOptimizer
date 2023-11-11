@@ -121,7 +121,7 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         LocalTime scheduleEnd = LocalTime.of(21, 0); // Example: 8 PM
 
         // Calculate the number of rows needed (e.g., for 30-minute slots in a 12-hour schedule, we need 24 rows)
-        int totalSlots = (int) ChronoUnit.MINUTES.between(scheduleStart, scheduleEnd) / 30;
+        int totalSlots = (int) ChronoUnit.HOURS.between(scheduleStart, scheduleEnd);
         Object[][] timetableData = new Object[totalSlots][6]; // 5 days + 1 for time column
 
         // Initialize time column
