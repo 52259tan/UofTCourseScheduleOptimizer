@@ -5,6 +5,9 @@ import Course.Course;
 
 import java.util.ArrayList;
 
+/** Demo of creating two courses through the CourseAPI and displaying all distance info between their buildings.
+ * @author Joshua Jang
+ */
 public class DistanceDemo {
     public static void main(String[] args) {
         ArrayList<Course> courses = new ArrayList<>();

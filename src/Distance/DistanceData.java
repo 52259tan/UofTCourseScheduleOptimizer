@@ -1,5 +1,9 @@
 package Distance;
 
+/** High-level data structure for storing distance and travel time info between two buildings.
+ * Buildings are represented by their unique building code.
+ * @author Joshua Jang
+ */
 public class DistanceData {
     private String originCode;
     private String destinationCode;

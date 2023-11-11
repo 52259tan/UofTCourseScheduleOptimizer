@@ -10,8 +10,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/** Lowest-level interface for communicating with the Google Maps Distance Matrix API.
+ * @author Joshua Jang
+ */
 public class GoogleMapsAPI {
-
     private static String encodeLocations(ArrayList<String> locations) {
         StringBuilder formattedString = new StringBuilder();
 
@@ -23,6 +25,15 @@ public class GoogleMapsAPI {
         return formattedString.toString();
     }
 
+    /** Call the API with multiple origins and destinations, at once.
+     * @param origins A list of all origin addresses to query the API.
+     *                Must be specific enough for Google to accurately search.
+     * @param destinations Same as origins, but for destinations.
+     * @param mode One of three strings: "walking", "transit", or "biking", which determines the mode of transport for all.
+     *             Note that all modes may include a portion of walking.
+     * @return A list containing all possible route combinations between each origin and destination.
+     *         The sublist contains the distance string (in m or km) at index 0 and travel time (in mins or hours) at index 1.
+     */
     public static ArrayList<ArrayList<String>> get(ArrayList<String> origins, ArrayList<String> destinations, String mode) {
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=%s&units=metric&key=%s";

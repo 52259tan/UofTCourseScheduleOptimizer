@@ -8,7 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/** Higher-level interface for retrieving distance and travel time data between buildings.
+ * @author Joshua Jang
+ */
 public class DistanceManager {
+    /** Retreive the distance and travel time between all possible building combinations that exist in the given courses.
+     * @param courses A list of all course entities.
+     *                All sessions (lec, tut, pra) in such courses must have a buildingCode and Address.
+     * @return A list of DistanceData instances containing origin and destination building codes,
+     *                distance, and travel time strings.
+     */
     public static ArrayList<DistanceData> getDistances(ArrayList<Course> courses) {
         ArrayList<DistanceData> results = new ArrayList<>();
 
