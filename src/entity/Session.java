@@ -1,8 +1,10 @@
+package entity;
+
 import java.io.*;
 import java.util.*;
 
 /**
- * A Session entity that contains the name of the session (LEC0101) and Time and Location.
+ * A entity.Session entity that contains the name of the session (LEC0101) and Time and Location.
  */
 public class Session {
     private String sessionCode = new String();
@@ -57,5 +59,18 @@ public class Session {
     @Override
     public String toString() {
         return (sessionCode);
+    }
+
+    // Percy: add more setters and getters
+    public List<Integer> getStartTime() { return startTime;
+    }
+
+    public List<Integer> getEndTime() { return endTime;
+    }
+
+    public List<Integer> getDay() { return day;
+    }
+
+    public String getSessionCode() { return sessionCode;
     }
 }
