@@ -1,12 +1,23 @@
+package algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map {
-    private List<String> courses;
-    private List<Double> distances;
-    private double totalDistance;
+import API.CourseAPI;
+import entity.Course;
+import entity.Schedule;
+import entity.Session;
 
-    public Map(List<String> courses, List<Double> distances) {
+// A map is a unique schedule, if two maps have exactly the same sessions, tuts, and pra, then they are the same map
+// We use randomly create 1000 maps, and calculate the total distance for each, and then output the map that have the least total distance
+public class Map {
+    private final Schedule schedule;
+    private final Session sessions;
+    private final List<Double> distances;
+    private final double totalDistance;
+
+    public Map(List<Course> courses, Schedule schedule, Session sessions, List<Double> distances) {
+        this.schedule = schedule;
+        this.sessions = sessions;
         this.courses = courses;
         this.distances = distances;
         this.totalDistance = calculateTotalDistance();
@@ -24,7 +35,7 @@ public class Map {
         }
     }
 
-    public List<String> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
@@ -36,17 +47,16 @@ public class Map {
         return totalDistance;
     }
 
+    // test case
     public static void main(String[] args) {
-        List<String> courses = new ArrayList<>();
-        courses.add("Course A");
-        courses.add("Course B");
-        courses.add("Course C");
+        List<Course> courses = new ArrayList<>();
+        Course cs207 = new Course(CourseAPI.getCourse("CSC207H1 -F"));
+        courses.add(cs207);
 
         List<Double> distances = new ArrayList<>();
-        distances.add(10.0);
-        distances.add(15.0);
 
-        Map myMap = new Map(courses, distances);
+
+        Map myMap = new Map(courses, schedule, sessions, distances);
 
         System.out.println("Courses: " + myMap.getCourses());
         System.out.println("Distances: " + myMap.getDistances());
