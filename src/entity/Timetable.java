@@ -1,4 +1,4 @@
-package algorithm;
+package entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,25 +6,27 @@ import API.CourseAPI;
 import entity.Course;
 import entity.Schedule;
 import entity.Session;
+import kotlin.NotImplementedError;
 
-// A map is a unique schedule, if two maps have exactly the same sessions, tuts, and pra, then they are the same map
-// We use randomly create 1000 maps, and calculate the total distance for each, and then output the map that have the least total distance
+/** A map is a unique schedule, if two maps have exactly the same sessions, tuts, and pra, then they are the same map
+ */
+ // We use randomly create 1000 maps, and calculate the total distance for each, and then output the map that have the least total distance
 public class Map {
     private final Schedule schedule;
-    private final Session sessions;
     private final List<Double> distances;
+    private final List<Session> sessions;
     private final double totalDistance;
 
-    public Map(List<Course> courses, Schedule schedule, Session sessions, List<Double> distances) {
+    public Map(Schedule schedule) {
         this.schedule = schedule;
-        this.sessions = sessions;
-        this.courses = courses;
-        this.distances = distances;
+        this.sessions = (List<Session>) this.schedule.getRandomSessionsForSchedule();
+        this.distances = this.getDistances();
         this.totalDistance = calculateTotalDistance();
     }
 
+
     private double calculateTotalDistance() {
-        if (distances.size() == courses.size() - 1) {
+        if (distances.size() == this.schedule.size() - 1) {
             double total = 0.0;
             for (Double distance : distances) {
                 total += distance;
@@ -35,9 +37,11 @@ public class Map {
         }
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    //TODO: implement this method using DistanceData class
+    private List<Double> getdistance(){
+        return this.distances;
     }
+
 
     public List<Double> getDistances() {
         return distances;
@@ -55,11 +59,5 @@ public class Map {
 
         List<Double> distances = new ArrayList<>();
 
-
-        Map myMap = new Map(courses, schedule, sessions, distances);
-
-        System.out.println("Courses: " + myMap.getCourses());
-        System.out.println("Distances: " + myMap.getDistances());
-        System.out.println("Total Distance: " + myMap.getTotalDistance());
     }
 }
