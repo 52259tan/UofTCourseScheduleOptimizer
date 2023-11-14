@@ -5,6 +5,7 @@ import API.CourseAPI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class Course {
     private String courseName;
@@ -28,6 +29,25 @@ public class Course {
             }
         }
     }
+// Ping: Get a list of all possible sessions (Lec, Tut and Pra) for a certain course
+    private static List<List<Session>> generateCombinations(List<Session> list1, List<Session> list2, List<Session> list3) {
+        List<List<Session>> allCombinations = new ArrayList<>();
+
+        for (Session element1 : list1) {
+            for (Session element2 : list2) {
+                for (Session element3 : list3) {
+                    List<Session> combination = new ArrayList<>();
+                    combination.add(element1);
+                    combination.add(element2);
+                    combination.add(element3);
+                    allCombinations.add(combination);
+                }
+            }
+        }
+
+        return allCombinations;
+    }
+
 
     public List<Session> getLecSessions(){
         return lecSessions;
