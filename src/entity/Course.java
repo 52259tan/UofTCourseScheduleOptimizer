@@ -1,4 +1,6 @@
-package Course;
+package entity;
+
+import entity.Session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,9 +45,13 @@ public class Course {
          */
         return praSessions.isEmpty();
     }
+    // Percy: Added a getter
+    public String getCourseName() {
+        return courseName;
+    }
 //    Testing
 //    public static void main(String[] args) {
-//        Course course = new Course(CourseAPI.getCourse("CSC207H1 -F"));
+//        entity.Course course = new entity.Course(CourseAPI.getCourse("CSC207H1 -F"));
 //        System.out.println(course.courseName);
 //        System.out.println(course.lecSessions);
 //        System.out.println(course.tutSessions);
