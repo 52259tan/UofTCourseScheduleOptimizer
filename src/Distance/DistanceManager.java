@@ -1,7 +1,7 @@
 package Distance;
 
-import Course.Course;
-import Course.Session;
+import entity.Course;
+import entity.Session;
 import API.GoogleMapsAPI;
 
 import java.util.ArrayList;

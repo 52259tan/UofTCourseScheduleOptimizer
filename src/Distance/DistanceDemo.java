@@ -1,7 +1,7 @@
 package Distance;
 
 import API.CourseAPI;
-import Course.Course;
+import entity.Course;
 
 import java.util.ArrayList;
 
