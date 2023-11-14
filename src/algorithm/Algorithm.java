@@ -1,40 +1,40 @@
 package algorithm;
 
-import entity.Map;
+import entity.Timetable;
 import entity.Schedule;
 
 import java.util.List;
 
-// This class randomly generate at most 1000 different schedules (Map class), and get the shortest distance one
+// This class randomly generate at most 1000 different schedules (Timetable class), and get the shortest distance one
 // assume "walking" for now
 public class Algorithm {
     //TODO: the schedule should be user input
     private static Schedule schedule;
     private List<Double> distances;
-    private List<Map> instances;
+    private List<Timetable> instances;
 
 
-    public Map[] main(String[] args) {
-        // Create 100 instances of Map
-        Map[] instances = new Map[100];
+    public Timetable[] main(String[] args) {
+        // Create 100 instances of Timetable
+        Timetable[] instances = new Timetable[100];
         this.distances = this.getListOfDistance();
 
         for (int i = 0; i < instances.length; i++) {
-            instances[i] = new Map(schedule);
+            instances[i] = new Timetable(schedule);
             this.instances = List.of(instances);
         }
         return instances;
     }
 
-    // create a list of total distance of each map
+    // create a list of total distance of each Timetable
     private List<Double> getListOfDistance() {
-        for (Map map : this.instances) {
-            this.distances.add(map.getTotalDistance());
+        for (Timetable Timetable : this.instances) {
+            this.distances.add(Timetable.getTotalDistance());
         }
         return this.distances;
     }
 
-    private Map getLeastDistanceMap() {
+    private Timetable getLeastDistanceTimetable() {
         int minValue = Integer.MAX_VALUE;
 
         for (Double number : this.distances) {

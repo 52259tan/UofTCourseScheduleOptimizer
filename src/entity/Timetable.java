@@ -3,21 +3,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import API.CourseAPI;
-import entity.Course;
-import entity.Schedule;
-import entity.Session;
-import kotlin.NotImplementedError;
 
 /** A map is a unique schedule, if two maps have exactly the same sessions, tuts, and pra, then they are the same map
  */
  // We use randomly create 1000 maps, and calculate the total distance for each, and then output the map that have the least total distance
-public class Map {
+public class Timetable {
     private final Schedule schedule;
     private final List<Double> distances;
     private final List<Session> sessions;
     private final double totalDistance;
 
-    public Map(Schedule schedule) {
+    public Timetable(Schedule schedule) {
         this.schedule = schedule;
         this.sessions = (List<Session>) this.schedule.getRandomSessionsForSchedule();
         this.distances = this.getDistances();
