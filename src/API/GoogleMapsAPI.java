@@ -37,14 +37,13 @@ public class GoogleMapsAPI {
     public static ArrayList<ArrayList<String>> get(ArrayList<String> origins, ArrayList<String> destinations, String mode) {
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=%s&units=metric&key=%s";
-        final String API_KEY = "AIzaSyA8W-ukR4bacqWfzy4kT0MSn52V-Y_kk0E";
 
         ArrayList<ArrayList<String>> results = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format(API_URL, encodeLocations(origins), encodeLocations(destinations), mode, API_KEY))
+                .url(String.format(API_URL, encodeLocations(origins), encodeLocations(destinations), mode, APIKeys.GOOGLE_MAPS_KEY))
                 .build();
         try {
             Response response = client.newCall(request).execute();
