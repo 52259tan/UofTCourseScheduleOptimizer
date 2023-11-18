@@ -9,12 +9,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /** Lowest-level interface for communicating with the Google Maps Distance Matrix API.
  * @author Joshua Jang
  */
-public class GoogleMapsAPI {
-    private static String encodeLocations(ArrayList<String> locations) {
+public class DistanceMatrixAPI {
+    private static String encodeLocations(List<String> locations) {
         StringBuilder formattedString = new StringBuilder();
 
         for (int i = 0; i < locations.size(); i++) {
@@ -34,11 +35,11 @@ public class GoogleMapsAPI {
      * @return A list containing all possible route combinations between each origin and destination.
      *         The sublist contains the distance string (in m or km) at index 0 and travel time (in mins or hours) at index 1.
      */
-    public static ArrayList<ArrayList<String>> get(ArrayList<String> origins, ArrayList<String> destinations, String mode) {
+    public static List<List<String>> get(List<String> origins, List<String> destinations, String mode) {
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=%s&units=metric&key=%s";
 
-        ArrayList<ArrayList<String>> results = new ArrayList<>();
+        List<List<String>> results = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -63,7 +64,7 @@ public class GoogleMapsAPI {
 
 
                 for (int j = 0; j < elementsArray.length(); j++) {
-                    ArrayList<String> resultPair = new ArrayList<>();
+                    List<String> resultPair = new ArrayList<>();
                     JSONObject element = elementsArray.getJSONObject(j);
                     JSONObject distance = element.getJSONObject("distance");
                     String distanceValue = distance.getString("text");

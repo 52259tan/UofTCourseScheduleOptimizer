@@ -1,8 +1,8 @@
 package Distance;
 
+import API.DistanceMatrixAPI;
 import entity.Course;
 import entity.Session;
-import API.GoogleMapsAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +18,14 @@ public class DistanceManager {
      * @return A list of DistanceData instances containing origin and destination building codes,
      *                distance, and travel time strings.
      */
-    public static ArrayList<DistanceData> getDistances(ArrayList<Course> courses) {
-        ArrayList<DistanceData> results = new ArrayList<>();
+    public static List<DistanceData> getDistances(List<Course> courses) {
+        List<DistanceData> results = new ArrayList<>();
 
-        ArrayList<String> allBuildingCodes = new ArrayList<>();
-        ArrayList<String> allAddresses = new ArrayList<>();
+        List<String> allBuildingCodes = new ArrayList<>();
+        List<String> allAddresses = new ArrayList<>();
 
         for(Course course : courses) {
-            ArrayList<Session> masterList = new ArrayList<>();
+            List<Session> masterList = new ArrayList<>();
             // Concatenate all sessions
             Stream.of(course.getLecSessions(), course.getTutSessions(), course.getPraSessions()).forEach(masterList::addAll);
 
@@ -43,7 +43,7 @@ public class DistanceManager {
             }
         }
 
-        ArrayList<ArrayList<String>> apiResults = GoogleMapsAPI.get(allAddresses, allAddresses, "walking");
+        List<List<String>> apiResults = DistanceMatrixAPI.get(allAddresses, allAddresses, "walking");
 
         int length = allBuildingCodes.size();
 
