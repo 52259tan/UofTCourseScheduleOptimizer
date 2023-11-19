@@ -1,7 +1,5 @@
 package gui;
 
-import InputViewDemo.CourseController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -91,11 +89,9 @@ public class CourseInputView extends JPanel {
     private JButton createButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.addActionListener(actionListener);
-        if ("Submit".equals(text)) {
-            button.addActionListener(this::submitButtonClicked);
-        }
-            return button;
+        return button;
     }
+
 
     private void addButtonClicked(ActionEvent e) {
         addCourseField();
@@ -108,6 +104,7 @@ public class CourseInputView extends JPanel {
         sourceButton.setOpaque(true);
         sourceButton.setBorderPainted(false);
         sourceButton.setContentAreaFilled(true);
+
         List<String> courses = new ArrayList<>();
         for (JTextField courseField : courseFields) {
             String courseCode = courseField.getText().trim();
@@ -115,6 +112,8 @@ public class CourseInputView extends JPanel {
                 courses.add(courseCode);
             }
         }
+
         controller.submitCourses(courses);
     }
+
 }

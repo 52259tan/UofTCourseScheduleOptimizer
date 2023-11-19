@@ -1,4 +1,4 @@
-package InputViewDemo;
+package gui;
 
 import entity.Course;
 import java.util.ArrayList;
