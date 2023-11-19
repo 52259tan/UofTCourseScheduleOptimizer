@@ -16,7 +16,7 @@ public class CourseControllerImpl implements CourseController {
     }
 
     @Override
-    public void submitCourses(List<String> courseCodes) {
+    public void execute(List<String> courseCodes) {
         /**
          * This method (invoked by the View) invokes the Interactor with an Input Data object
          * @param courseCodes list of course codes inputted by the user

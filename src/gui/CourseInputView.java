@@ -113,7 +113,7 @@ public class CourseInputView extends JPanel {
             }
         }
 
-        controller.submitCourses(courses);
+        controller.execute(courses);
     }
 
 }

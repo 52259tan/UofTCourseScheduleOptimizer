@@ -22,7 +22,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             CourseController mockController = new CourseController() {
                 @Override
-                public void submitCourses(List<String> courseCodes) {
+                public void execute(List<String> courseCodes) {
                     // Print the submitted course codes
                     System.out.println("Submitted courses: " + courseCodes);
 
