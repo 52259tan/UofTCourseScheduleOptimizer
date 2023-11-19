@@ -6,7 +6,7 @@ AR:230 College St
 BA:40 St George St
 BC:75 A Queens Park
 BF:4 Bancroft Ave
-BI:100 College StBY
+BI:100 College St
 BY:255 Beverley Street
 BL:140 St George St
 BN:320 Huron St
