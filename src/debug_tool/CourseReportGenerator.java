@@ -5,12 +5,10 @@ import java.util.*;
 import entity.Course;
 import API.CourseAPI;
 
-//"availableCourses.txt"
-//Users/percycat/IdeaProjects/UofTCourseScheduleOptimizer_2/src/codetoaddress.txt"
 public class CourseReportGenerator {
 
     public static void main(String[] args) {
-        String coursesFile = "availableCourses.txt"; // Update with actual path
+        String coursesFile = "availableCourses.txt";
 
         List<String> courses = readCourses(coursesFile);
 
