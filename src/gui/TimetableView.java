@@ -47,8 +47,6 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         timetableTable.setShowGrid(false);
         timetableTable.setIntercellSpacing(new Dimension(0, 0)); // This will reduce the space between cells
 
-
-
         // Add the table to a scroll pane and then to the panel
         add(new JScrollPane(timetableTable), BorderLayout.CENTER);
 
@@ -56,9 +54,6 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         totalDistanceLabel = new JLabel("Total Distance: 0 km");
         add(totalDistanceLabel, BorderLayout.SOUTH);
     }
-
-
-
 
     // Inner class for the timetable table model
     class TimetableTableModel extends AbstractTableModel {
@@ -114,7 +109,7 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    // This method needs to be filled out with logic specific to your application
+    // This method sets up the slots and fill in the data
     private void updateTimetableDisplay(List<Course> courses) {
         // Define the start and end times of your schedule
         LocalTime scheduleStart = LocalTime.of(8, 0); // Example: 8 AM
@@ -171,7 +166,7 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
                 System.out.println("Start Row: " + startRow);
                 System.out.println("End Row: " + endRow);
 
-                // Get the day column index, adjust if your array doesn't start with index 1 for Monday
+                // Get the day column index from 0 (Monday) to 4 (Friday)
                 int dayColumn = days.get(i) + 1; // Assuming timetableData[0][1] is Monday
 
                 System.out.println("Day Column: " + dayColumn + " " + "Len: " + timetableData[0].length);
@@ -190,8 +185,6 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
             }
         }
     }
-
-
 
     class CourseCellRenderer extends DefaultTableCellRenderer {
         private final Object[][] timetableData;
@@ -273,9 +266,6 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
             return this;
         }
     }
-
-
-
 
     private void updateTotalDistanceDisplay(double totalDistance) {
         totalDistanceLabel.setText("Total Distance: " + totalDistance + " km");
