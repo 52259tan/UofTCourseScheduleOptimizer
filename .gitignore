@@ -2,10 +2,6 @@
 src/.DS_Store
 .DS_Store
 UofTCourseScheduleOptimizer.iml
-.idea/vcs.xml
-.idea/modules.xml
-.idea/misc.xml
-.idea/compiler.xml
-.idea/encodings.xml
-.idea/jarRepositories.xml
-/target/
+.idea/
+target/
+

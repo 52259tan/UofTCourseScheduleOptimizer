@@ -1,6 +1,6 @@
 package entity;
 
-import API.CourseAPI;
+import entity.Session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
