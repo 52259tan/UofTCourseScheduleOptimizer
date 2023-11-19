@@ -6,6 +6,10 @@ import entity.Course;
 import API.CourseAPI;
 
 public class CourseReportGenerator {
+    /**
+     * This test prints a list of course codes that cannot be converted to Course entity
+     * This a course is getting printed, it's because a building code is missing from codetoaddress.txt
+     */
 
     public static void main(String[] args) {
         String coursesFile = "availableCourses.txt";
