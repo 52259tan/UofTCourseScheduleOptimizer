@@ -17,7 +17,7 @@ import static algorithm.TimeRangeOverlapChecker.checkNoOverlap;
  */
 public class AllPossibleSessions {
     // Get a list of all possible sessions (Lec, Tut, and Pra) for a certain course
-    private static List<List<Session>> generateCombinations(Course course) {
+    public static List<List<Session>> generateCombinations(Course course) {
         List<List<Session>> allCombinations = new ArrayList<>();
         List<Session> list1 = course.getLecSessions();
         List<Session> list2 = course.getTutSessions();
