@@ -1,48 +1,94 @@
 package algorithm;
 
-import entity.Timetable;
-import entity.Schedule;
+import entity.Course;
+import entity.Session;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-// This class randomly generate at most 1000 different schedules (Timetable class), and get the shortest distance one
-// assume "walking" for now
+import static algorithm.AllPossibleTimeTables.getAllTimeTable;
+import static algorithm.getDistances.getDistance;
+
+/** This class return the global optimal choice based on the courses that the user input
+ * @author ping
+ */
 public class Algorithm {
-    //TODO: the schedule should be user input
-    private static Schedule schedule;
-    private List<Double> distances;
-    private List<Timetable> instances;
+    /**
+     * This method return a list of the sessions of one timetable
+     *
+     * @param timeTable the timetable that is a list of lists of sessions
+     * @return A list of Session objects
+     */
+    private static List<Session> flattenList(List<List<Session>> timeTable) {
+        List<Session> result = new ArrayList<>();
 
-
-    public Timetable[] main(String[] args) {
-        // Create 100 instances of Timetable
-        Timetable[] instances = new Timetable[100];
-        this.distances = this.getListOfDistance();
-
-        for (int i = 0; i < instances.length; i++) {
-            instances[i] = new Timetable(schedule);
-            this.instances = List.of(instances);
+        for (List<Session> element : timeTable) {
+            result.addAll(element);
         }
-        return instances;
+        return result;
     }
 
-    // create a list of total distance of each Timetable
-    private List<Double> getListOfDistance() {
-        for (Timetable Timetable : this.instances) {
-            this.distances.add(Timetable.getTotalDistance());
+    /**
+     * This method return a list of the distance of each timeTable
+     *
+     * @param courses the list of Courses that the user selected
+     * @return A list of sessions, the final optimal choice Wow!!!
+     */
+    private static List<Session> getOptimalChoice(List<Course> courses) {
+        List<List<List<Session>>> allTimeTable = getAllTimeTable(courses);
+        List<List<Session>> flattenTimeTable = new ArrayList<>();
+        for (List<List<Session>> timeTable : allTimeTable) {
+            flattenTimeTable.add(flattenList(timeTable));
         }
-        return this.distances;
+
+        List<Double> allDistances = new ArrayList<>();
+        for (List<Session> timeTable : flattenTimeTable) {
+            List<List<Object>> data1 = new ArrayList<>();
+            List<List<Object>> data2 = new ArrayList<>();
+            List<List<Object>> data3 = new ArrayList<>();
+            List<List<Object>> data4 = new ArrayList<>();
+            List<List<Object>> data5 = new ArrayList<>();
+            for (Session ses : timeTable) {
+                if (ses.getDay().equals(1)) {
+                    data1.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                } else if (ses.getDay().equals(2)) {
+                    data2.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                } else if (ses.getDay().equals(23)) {
+                    data3.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                } else if (ses.getDay().equals(4)) {
+                    data4.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                } else if (ses.getDay().equals(5)) {
+                    data5.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                }
+                // Sort the list based on the start time (index 0)
+                Collections.sort(data1, Comparator.comparingInt(list -> (Integer) list.get(0)));
+                Collections.sort(data2, Comparator.comparingInt(list -> (Integer) list.get(0)));
+                Collections.sort(data3, Comparator.comparingInt(list -> (Integer) list.get(0)));
+                Collections.sort(data4, Comparator.comparingInt(list -> (Integer) list.get(0)));
+                Collections.sort(data5, Comparator.comparingInt(list -> (Integer) list.get(0)));
+                allDistances.add(getDistance(data1) + getDistance(data2) + getDistance(data3) + getDistance(data4) + getDistance(data5));
+            }
+        }
+
+
+        // Find the index of the minimum distance
+        int minIndex = findMinIndex(allDistances);
+        return flattenTimeTable.get(minIndex);
     }
 
-    private Timetable getLeastDistanceTimetable() {
-        int minValue = Integer.MAX_VALUE;
+    public static Integer findMinIndex(List<Double> allDistances) {
 
-        for (Double number : this.distances) {
-            minValue = (int) Math.min(minValue, number);
+        double minValue = allDistances.get(0);
+        int minIndex = 0;
+
+        for (int i = 1; i < allDistances.size(); i++) {
+            if (allDistances.get(i) < minValue) {
+                minValue = allDistances.get(i);
+                minIndex = i;
+            }
         }
-        int index = this.distances.indexOf(minValue);
-
-        return instances.get(index);
-
-        }
+        return minIndex;
     }
+}
