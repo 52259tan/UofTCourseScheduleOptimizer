@@ -1,4 +1,4 @@
-package TimtableDemo;
+package TimetableDemo;
 
 import API.CourseAPI;
 import entity.Course;
