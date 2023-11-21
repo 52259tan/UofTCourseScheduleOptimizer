@@ -17,7 +17,7 @@ public class Course {
         courseName = courseInfo.keySet().iterator().next().toString();
         for (String sessionCode: courseInfo.get(courseName).keySet()){
             Session session = new Session(courseInfo.get(courseName).get(sessionCode));
-            session.setSessionCode(courseName.substring(0,6) + sessionCode);
+            session.setSessionCode(courseName.substring(0,6) +' '+ sessionCode);
             String type = sessionCode.substring(0,3);
             if (type.equals("LEC")){
                 lecSessions.add(session);
