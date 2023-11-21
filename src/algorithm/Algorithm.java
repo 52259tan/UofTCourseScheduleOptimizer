@@ -46,7 +46,7 @@ public class Algorithm {
         List<List<List<Session>>> allTimeTable = getAllTimeTable(courses);
         List<List<Session>> flattenTimeTable = new ArrayList<>();
         for (List<List<Session>> timeTable : allTimeTable) { //sample timeTable: [[sessions for course1], [sessions for course2],[sessions for course3],[sessions for course4], [sessions for course5]]//
-            flattenTimeTable.add(flattenList(timeTable)); //sample element in flattenTimeTable: [sessions for course1, sessions for course2, etc...]
+            flattenTimeTable.add(flattenList(timeTable)); //sample element in flattenTimeTable: [sessions for course1, sessions for course2, etc...], [],[]
         }
 
         List<Double> allDistances = new ArrayList<>();

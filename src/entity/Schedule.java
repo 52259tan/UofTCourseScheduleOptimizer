@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A entity.Schedule entity that contains the name of the Courses a student select for a semester or a year
+ * An entity.Schedule entity that contains the name of the Courses a student select for a semester or a year
+@author ping
  */
 public class Schedule {
     private String ScheduleName;
-    private List<Course> course = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 
-    public Schedule(String ScheduelName, Course course1, Course course2, Course course3, Course course4, Course course5){
+    // Assume user input have 5 courses
+    //TODO: change the input parameter such that user can choose arbitrary number of courses
+    public Schedule(String ScheduelName, Course course1, Course course2, Course course3, Course course4, Course course5) {
         this.ScheduleName = ScheduelName;
-        this.course.add(course1);
-        this.course.add(course2);
-        this.course.add(course3);
-        this.course.add(course4);
-        this.course.add(course5);
+        this.courses.add(course1);
+        this.courses.add(course2);
+        this.courses.add(course3);
+        this.courses.add(course4);
+        this.courses.add(course5);
+    }
+
+    public int size() {
+        return courses.size();
     }
 }

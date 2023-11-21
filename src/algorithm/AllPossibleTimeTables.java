@@ -11,20 +11,20 @@ import static algorithm.DayOverlapChecker.hasOverlappingDay;
 import static algorithm.TimeRangeOverlapChecker.checkNoOverlap;
 
 /**
- * Generate all possible combinations of sessions (one Lec, one Tut, one Pra) of a course without time conflict
+ * Generate all possible combinations of sessions (one Lec, one Tut, one Pra) of 5 courses without time conflict
  * @author pinglu
  */
 public class AllPossibleTimeTables {
 
     /**
-     * Generate all possible combinations of sessions (one Lec, one Tut, one Pra) of a course without time conflict
+     * Generate all possible combinations of sessions (one Lec, one Tut, one Pra) of 5 courses without time conflict
      *
      * @param courses A list of courses that the user choose
      * @return all possible timetables which contains one list of sessions for each course without time conflict
      */
     public static List<List<List<Session>>> getAllTimeTable(List<Course> courses) {
         List<List<List<Session>>> possibleTimeTable = new ArrayList<>();
-        for (List<Session> listOfSessions1 : generateCombinations(courses.get(0))) {
+        for (List<Session> listOfSessions1 : generateCombinations(courses.get(0))) { // [[tut, lec],[tut,lec]]
             List<List<Session>> timeTable = new ArrayList<>();
             timeTable.add(listOfSessions1);
             for (List<Session> listOfSessions2 : generateCombinations(courses.get(1))) {
@@ -40,7 +40,7 @@ public class AllPossibleTimeTables {
                                         if (noConflict(listOfSessions5, timeTable)){
                                             timeTable.add(listOfSessions5);
                                             possibleTimeTable.add(timeTable);
-                                    }
+                                    }// [[[lec1,tu1],[lec2, tut2].....]]]
                                     }
                             }
                         }

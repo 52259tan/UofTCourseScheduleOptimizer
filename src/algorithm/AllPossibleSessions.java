@@ -66,6 +66,6 @@ public class AllPossibleSessions {
             }
         }
 
-        return allCombinations;
+        return allCombinations;  // [[tutSession, lecSession],[]]
     }
 }

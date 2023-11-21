@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * A entity.Session entity that contains the name of the session (LEC0101) and Time and Location.
+ * An entity.Session entity that contains the name of the session (LEC0101) and Time and Location.
  */
 public class Session {
     private String sessionCode = new String();
