@@ -16,7 +16,7 @@ public class MockTimetableOptimizerInteractor {
 
     public void execute() {
         // Example data
-        List<Session> sessions = MockData.getMockSessions();
+        List<Session> sessions = MockListSession.mockSessions();
         double distance = MockData.getMockTotalDistance();
         List<Object> mixedList = new ArrayList<>();
         TimeTableOutputData outputdata = new TimeTableOutputData(sessions, distance);
