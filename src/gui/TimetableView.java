@@ -1,6 +1,5 @@
 package gui;
 
-import entity.Course;
 import entity.Session;
 
 import javax.swing.*;
@@ -47,8 +46,6 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         timetableTable.setShowGrid(false);
         timetableTable.setIntercellSpacing(new Dimension(0, 0)); // This will reduce the space between cells
 
-
-
         // Add the table to a scroll pane and then to the panel
         add(new JScrollPane(timetableTable), BorderLayout.CENTER);
 
@@ -56,9 +53,6 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         totalDistanceLabel = new JLabel("Total Distance: 0 km");
         add(totalDistanceLabel, BorderLayout.SOUTH);
     }
-
-
-
 
     // Inner class for the timetable table model
     class TimetableTableModel extends AbstractTableModel {
@@ -114,8 +108,8 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    // This method needs to be filled out with logic specific to your application
-    private void updateTimetableDisplay(List<Course> courses) {
+    // This method sets up the slots and fill in the data
+    private void updateTimetableDisplay(List<Session> sessions) {
         // Define the start and end times of your schedule
         LocalTime scheduleStart = LocalTime.of(8, 0); // Example: 8 AM
         LocalTime scheduleEnd = LocalTime.of(21, 0); // Example: 8 PM
@@ -131,67 +125,43 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
             timeIterator = timeIterator.plusMinutes(60); // Corrected to 30-minute increment
         }
 
-        // Process courses and their sessions
-        for (Course course : courses) {
-            // Handle different types of sessions: lectures, tutorials, and practicals
-            processSessions(course.getLecSessions(), course.getCourseName(), "LEC", timetableData);
-            processSessions(course.getTutSessions(), course.getCourseName(), "TUT", timetableData);
-            processSessions(course.getPraSessions(), course.getCourseName(), "PRA", timetableData);
+        for (Session session : sessions) {
+            processSession(session, timetableData);
         }
 
         // Now that we've built the data, update the table model
         TimetableTableModel model = (TimetableTableModel) timetableTable.getModel();
         model.setData(timetableData); // Update the model with new data
     }
-    private void processSessions(List<Session> sessions, String courseName, String sessionType, Object[][] timetableData) {
-        LocalTime scheduleStart = LocalTime.of(8, 0); // The timetable starts at 8 AM
-        int slotDurationInMinutes = 60; // Each slot is 30 minutes
-        System.out.println(courseName);
+    private void processSession(Session session, Object[][] timetableData) {
+        LocalTime scheduleStart = LocalTime.of(8, 0); // Assuming your timetable starts at 8 AM
+        int slotDurationInMinutes = 60; // Assuming each slot is 60 minutes
 
+        List<Integer> startTimes = session.getStartTime(); // Start times in hours
+        List<Integer> endTimes = session.getEndTime(); // End times in hours
+        List<Integer> days = session.getDay(); // Day indices (1 for Monday, etc.)
+        String sessionCode = session.getSessionCode(); // Session code
 
-        for (Session session : sessions) {
-            List<Integer> startTimes = session.getStartTime(); // Start times in milliseconds
-            List<Integer> endTimes = session.getEndTime(); // End times in milliseconds
-            List<Integer> days = session.getDay(); // Day indices (1 for Monday, etc.)
-            System.out.println(startTimes);
-            System.out.println(endTimes);
+        for (int i = 0; i < startTimes.size(); i++) {
+            // Convert times to 'LocalTime'
+            LocalTime startTime = LocalTime.of(startTimes.get(i), 0);
+            LocalTime endTime = LocalTime.of(endTimes.get(i), 0);
 
-            for (int i = 0; i < startTimes.size(); i++) {
-                // Convert times from milliseconds to 'LocalTime'
-                LocalTime startTime = LocalTime.ofSecondOfDay(startTimes.get(i) * 3600);
-                LocalTime endTime = LocalTime.ofSecondOfDay(endTimes.get(i) * 3600);
+            // Calculate row indices
+            int startRow = (int) ChronoUnit.MINUTES.between(scheduleStart, startTime) / slotDurationInMinutes;
+            int endRow = (int) ChronoUnit.MINUTES.between(scheduleStart, endTime) / slotDurationInMinutes;
 
-                System.out.println("Start Time: " + startTime);
-                System.out.println("End Time: " + endTime);
+            // Get the day column index from 0 (Monday) to 4 (Friday)
+            int dayColumn = days.get(i); // Assuming days are 1-indexed (1 for Monday, etc.)
 
-                // Calculate row indices
-                int startRow = (int) ChronoUnit.MINUTES.between(scheduleStart, startTime) / slotDurationInMinutes;
-                int endRow = (int) ChronoUnit.MINUTES.between(scheduleStart, endTime) / slotDurationInMinutes;
-
-                System.out.println("Start Row: " + startRow);
-                System.out.println("End Row: " + endRow);
-
-                // Get the day column index, adjust if your array doesn't start with index 1 for Monday
-                int dayColumn = days.get(i) + 1; // Assuming timetableData[0][1] is Monday
-
-                System.out.println("Day Column: " + dayColumn + " " + "Len: " + timetableData[0].length);
-
-                // Check bounds and fill in the timetableData
-                if (dayColumn >= 1 && dayColumn < timetableData[0].length) {
-
-                    for (int row = startRow; row < endRow; row++) {
-                        System.out.println("Reached");
-                        if (row >= 0 && row < timetableData.length) {
-                            timetableData[row][dayColumn] = courseName + " " + session.getSessionCode();
-                            System.out.println("Setting [" + row + "][" + dayColumn + "] to " + timetableData[row][dayColumn]);
-                        }
-                    }
+            // Place session data into the timetableData array
+            for (int row = startRow; row < endRow; row++) {
+                if (row >= 0 && row < timetableData.length && dayColumn >= 1 && dayColumn < timetableData[0].length) {
+                    timetableData[row][dayColumn] = sessionCode;
                 }
             }
         }
     }
-
-
 
     class CourseCellRenderer extends DefaultTableCellRenderer {
         private final Object[][] timetableData;
@@ -274,17 +244,14 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         }
     }
 
-
-
-
     private void updateTotalDistanceDisplay(double totalDistance) {
         totalDistanceLabel.setText("Total Distance: " + totalDistance + " km");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("courses".equals(evt.getPropertyName())) {
-            updateTimetableDisplay((List<Course>) evt.getNewValue());
+        if ("sessions".equals(evt.getPropertyName())) {
+            updateTimetableDisplay((List<Session>) evt.getNewValue());
         } else if ("totalDistance".equals(evt.getPropertyName())) {
             updateTotalDistanceDisplay((Double) evt.getNewValue());
         }

@@ -1,6 +1,6 @@
 package gui;
 
-import entity.Course;
+import entity.Session;
 import use_case.TimeTableOutputData;
 import use_case.TimetableOutputBoundary;
 
@@ -15,12 +15,10 @@ public class TimetablePresenter implements TimetableOutputBoundary {
 
     @Override
     public void presentTimetableOptimizationResults(TimeTableOutputData outputData) {
-        // The interactor would have performed the logic and given us the output data
-        List<Course> courses = outputData.getCourses();
+        List<Session> sessions = outputData.getSessions(); // Changed from getCourses to getSessions
         double totalDistance = outputData.getTotalDistance();
 
-        // Update the ViewModel with the new data, which will fire property changes
-        timetableViewModel.setCourses(courses);
+        timetableViewModel.setSessions(sessions); // Changed from setCourses to setSessions
         timetableViewModel.setTotalDistance(totalDistance);
     }
 }

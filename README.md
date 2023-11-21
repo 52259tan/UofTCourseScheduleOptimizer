@@ -36,10 +36,10 @@ Result:
 	<img width=80% src="imgs/image2.png">
 </p>
 
-## UofT Course API Documentation
+## UofT entity.Course API Documentation
 There are no public UofT course APIs so no documentation. However we could still access course information using API-like java codes requesting to https://ttb.utoronto.ca/.
 
-## UofT Course API Test Screenshot
+## UofT entity.Course API Test Screenshot
 Using Insomnia REST, we have:
 <p align="center">
 	<img width=80% src="imgs/image1.png">
