@@ -143,25 +143,22 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         String sessionCode = session.getSessionCode(); // Session code
 
         for (int i = 0; i < startTimes.size(); i++) {
-            // Convert times to 'LocalTime'
             LocalTime startTime = LocalTime.of(startTimes.get(i), 0);
             LocalTime endTime = LocalTime.of(endTimes.get(i), 0);
 
-            // Calculate row indices
             int startRow = (int) ChronoUnit.MINUTES.between(scheduleStart, startTime) / slotDurationInMinutes;
             int endRow = (int) ChronoUnit.MINUTES.between(scheduleStart, endTime) / slotDurationInMinutes;
 
-            // Get the day column index from 0 (Monday) to 4 (Friday)
-            int dayColumn = days.get(i); // Assuming days are 1-indexed (1 for Monday, etc.)
+            int dayColumn = days.get(i); // Adjusted to 0-indexed for table
 
-            // Place session data into the timetableData array
             for (int row = startRow; row < endRow; row++) {
-                if (row >= 0 && row < timetableData.length && dayColumn >= 1 && dayColumn < timetableData[0].length) {
+                if (row >= 0 && row < timetableData.length && dayColumn >= 0 && dayColumn < timetableData[0].length) {
                     timetableData[row][dayColumn] = sessionCode;
                 }
             }
         }
     }
+
 
     class CourseCellRenderer extends DefaultTableCellRenderer {
         private final Object[][] timetableData;
