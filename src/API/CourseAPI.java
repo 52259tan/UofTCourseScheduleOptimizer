@@ -110,7 +110,7 @@ public class CourseAPI {
         /**
          Try it out!
          */
-        availableCourses();
+        System.out.println((getCourse("CSC108H1 -F")));
     }
 
 
