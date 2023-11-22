@@ -59,15 +59,15 @@ public class Algorithm {
             for (Session ses : timeTable) { //sample info in [starTime,endTime,Address] :  [[7,9],[8,10],["location1","location2"]]
                 for (Integer day : ses.getDay()) { //sample days:[1,3] which 1 corresponds to [7,8,"location1"] and 3 corresponds to [9,10,"location2"]
                     if (day.equals(1)) {
-                        data1.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress())); //sample data in data1 [[7,8,"location1"]]
+                        data1.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode())); //sample data in data1 [[7,8,"location1"]]
                     } else if (day.equals(2)) {
-                        data2.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                        data2.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
                     } else if (day.equals(3)) {
-                        data3.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                        data3.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
                     } else if (day.equals(4)) {
-                        data4.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                        data4.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
                     } else if (day.equals(5)) {
-                        data5.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getAddress()));
+                        data5.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
                     }
                 }
             }
