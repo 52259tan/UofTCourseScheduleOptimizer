@@ -1,7 +1,7 @@
 package algorithm;
 
 
-import API.GoogleMapsAPI;
+import Distance.DistanceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +21,18 @@ public class getDistances {
      * @return A list of Session objects
      */
     public static Double getDistance(List<List<Object>> data) {
-        //sample data1 [[7,8,"location1"], [9,10,"location2"]]
-        List<String> addresses = new ArrayList<>();
-        for (List<Object> classData : data) { //sample classData : [7,8,"location1"]
-            addresses.add((String) classData.get(2));
-        } //sample addresses : ["location1", "location2", "location3"]
+        //sample data1 [[7,8,"buildingCode1"], [9,10,"buildingCode2"]]
+        List<String> buildingCode = new ArrayList<>();
+        for (List<Object> classData : data) { //sample classData : [7,8,"buildingCode1"]
+            buildingCode.add((String) classData.get(2));
+        } //sample buildingCode : ["buildingCode1", "buildingCode2", "buildingCode3"]
 
         //get distance between each two address
         Double distance = 0.0;
-        List<List<String>> addressPair = getConsecutivePairs(addresses); // [["location1","location2"],["location2","location3"]]
+        List<List<String>> buildingCodePair = getConsecutivePairs(buildingCode); // [["buildingCode1","buildingCode2"],["buildingCode2","buildingCode3"]]
 
-        for (List<String> pair : addressPair) { //["location1","location2"]
-            ArrayList<String> address1 = new ArrayList<>();
-            ArrayList<String> address2 = new ArrayList<>();
-            address1.add(pair.get(0));
-            address2.add(pair.get(1));
-            ArrayList<ArrayList<String>> apiResults = GoogleMapsAPI.get(address1, address2, "walking");
-            distance += Double.parseDouble(apiResults.get(1).get(0));
+        for (List<String> pair : buildingCodePair) { //["buildingCode1","buildingCode2"]
+            distance += DistanceManager.getDistance(pair.get(0), pair.get(1));
 
         }
         return distance;
