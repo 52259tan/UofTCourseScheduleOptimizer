@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * @author Joshua Jang
  */
 public class DistanceManager {
-    /** Retreive the distance and travel time between all possible building combinations that exist in the given courses.
+    /** Retrieve the distance and travel time between all possible building combinations that exist in the given courses.
      * @param courses A list of all course entities.
      *                All sessions (lec, tut, pra) in such courses must have a buildingCode and Address.
      * @return A list of DistanceData instances containing origin and destination building codes,
