@@ -1,4 +1,4 @@
-package TimtableDemo;
+package TimetableDemo;
 
 import API.CourseAPI;
 import entity.Course;
@@ -24,8 +24,7 @@ public class MockListSession {
     ret_list.add(csc209.getTutSessions().get(0));
     ret_list.add(mat337.getLecSessions().get(0));
     ret_list.add(mat337.getTutSessions().get(0));
-    return ret_list;
-    }
+    return ret_list;}
 
 
     // This returns you a list of courses if you need
@@ -37,9 +36,7 @@ public class MockListSession {
         ret_list.add(csc207);
         ret_list.add(csc209);
         ret_list.add(mat337);
-        return ret_list;
-
-}
+        return ret_list;}
 
     public static void main(String[] args) {
         System.out.println(mockSessions());

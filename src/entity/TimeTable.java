@@ -38,4 +38,3 @@ public class TimeTable {
         }
         return address; //["address1", "address2", "address3"]
     }
-}
