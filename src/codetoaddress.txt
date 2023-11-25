@@ -1,18 +1,22 @@
 AB:50 St George St
 AH:121 St Joseph St
 AP:19 Russell Street
+AG:750 Spadina Avenue
 AR:230 College St
 BA:40 St George St
 BC:75 A Queens Park
 BF:4 Bancroft Ave
 BI:100 College St
+BY:255 Beverley Street
 BL:140 St George St
 BN:320 Huron St
 BR:81 St Mary St
 BT:93 Charles St West
 CB:112 College St
+CG:14 Queen's Park Crescent West
 CH:31 King's College Cir
 CR:100 St Joseph St
+DA:1 Spadina Crescent
 EA:11 King's College Rd
 EC:150 St George St
 EH:81 St Mary St
@@ -47,9 +51,12 @@ MM:63 St George St
 MP:255 Huron St
 MS:1 King's College Circ
 MU:1 Devonshire Pl
+MY:55 St George St
+ML:39A Queen's Park Crescent East
 NB:563 Spadina Ave
 NF:73 Queen's Park Cres E
 NR:45 Willcocks St
+NL:6 Queen's Park Crescent West
 OI:252 Bloor St W
 PB:144 College St
 PG:45 St George St
@@ -64,6 +71,7 @@ RT:105 St George St
 RW:25 Harbord St
 SB:487 Spadina Ave
 SC:21 Sussex Ave
+SU:230 College Street
 SF:10 King's College Rd
 SI:27 King's College Circ
 SM:9 King's College Circ
@@ -84,3 +92,14 @@ WO:321 Bloor St W
 WS:55 Harbord St
 WW:119 St George St
 ZC:88 College St
+RG:100 Wellesley St W
+SD:73 St. George Street
+SK:246 Bloor Street West
+RU:500 University Avenue
+UY:700 University Avenue
+OH:50 St. Joseph Street
+OA:263 McCaul Street
+GM:4 Glen Morris Street
+Online:88 College St
+ON:88 College St
+TBA:88 College St

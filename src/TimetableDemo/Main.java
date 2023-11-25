@@ -1,4 +1,4 @@
-package TimtableDemo;
+package TimetableDemo;
 import gui.*;
 
 import javax.swing.*;
