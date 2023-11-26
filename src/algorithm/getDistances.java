@@ -32,8 +32,7 @@ public class getDistances {
         List<List<String>> buildingCodePair = getConsecutivePairs(buildingCode); // [["buildingCode1","buildingCode2"],["buildingCode2","buildingCode3"]]
 
         for (List<String> pair : buildingCodePair) { //["buildingCode1","buildingCode2"]
-            distance += DistanceManager.getDistance(pair.get(0), pair.get(1));
-
+            distance += DistanceManager.getDistanceData(pair.get(0), pair.get(1)).getDistanceFloat();
         }
         return distance;
     }

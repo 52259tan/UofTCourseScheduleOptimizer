@@ -8,13 +8,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 
 /** Lowest-level interface for communicating with the Google Maps Distance Matrix API.
  * @author Joshua Jang
  */
 public class GoogleMapsAPI {
-    private static String encodeLocations(ArrayList<String> locations) {
+    private static String encodeLocations(List<String> locations) {
         StringBuilder formattedString = new StringBuilder();
 
         for (int i = 0; i < locations.size(); i++) {
@@ -34,7 +35,7 @@ public class GoogleMapsAPI {
      * @return A list containing all possible route combinations between each origin and destination.
      *         The sublist contains the distance string (in m or km) at index 0 and travel time (in mins or hours) at index 1.
      */
-    public static ArrayList<ArrayList<String>> get(ArrayList<String> origins, ArrayList<String> destinations, String mode) {
+    public static ArrayList<ArrayList<String>> get(List<String> origins, List<String> destinations, String mode) {
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=%s&units=metric&key=%s";
 
@@ -48,19 +49,13 @@ public class GoogleMapsAPI {
         try {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
-            //System.out.println(responseBody);
-
-            JSONArray resultDestinations =
-                    responseBody.getJSONArray("destination_addresses");
-            JSONArray resultOrigins =
-                    responseBody.getJSONArray("origin_addresses");
+            System.out.println(responseBody);
 
             JSONArray rows = responseBody.getJSONArray("rows");
 
             for (int i = 0; i < rows.length(); i++) {
                 JSONObject elements = rows.getJSONObject(i);
                 JSONArray elementsArray = elements.getJSONArray("elements");
-
 
                 for (int j = 0; j < elementsArray.length(); j++) {
                     ArrayList<String> resultPair = new ArrayList<>();
