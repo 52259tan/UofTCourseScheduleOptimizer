@@ -24,6 +24,8 @@ public class MockListSession {
     ret_list.add(csc209.getTutSessions().get(0));
     ret_list.add(mat337.getLecSessions().get(0));
     ret_list.add(mat337.getTutSessions().get(0));
+    System.out.println(csc207.getLecSessions().get(0).getStartTime());
+    System.out.println(csc207.getLecSessions().get(0).getEndTime());
     return ret_list;}
 
 
