@@ -5,6 +5,7 @@ import entity.Session;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class Course {
     private String courseName;
@@ -17,7 +18,7 @@ public class Course {
         courseName = courseInfo.keySet().iterator().next().toString();
         for (String sessionCode: courseInfo.get(courseName).keySet()){
             Session session = new Session(courseInfo.get(courseName).get(sessionCode));
-            session.setSessionCode(sessionCode);
+            session.setSessionCode(courseName.substring(0,6) +' '+ sessionCode);
             String type = sessionCode.substring(0,3);
             if (type.equals("LEC")){
                 lecSessions.add(session);
@@ -59,3 +60,7 @@ public class Course {
 //        System.out.println(course.hasPra());
 //    }
 }
+
+//instance of a class can call non-statics method
+//A class can call statics method
+//statics method does not belongs to an instance

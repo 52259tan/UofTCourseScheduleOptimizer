@@ -1,6 +1,6 @@
 package gui;
 
-import entity.Course;
+import entity.Session;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -8,21 +8,21 @@ import java.util.List;
 
 public class TimetableViewModel {
     private final PropertyChangeSupport support;
-    private List<Course> courses;
+    private List<Session> sessions;
     private double totalDistance;
 
     public TimetableViewModel() {
         support = new PropertyChangeSupport(this);
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Session> getSessions() {
+        return sessions;
     }
 
-    public void setCourses(List<Course> courses) {
-        List<Course> oldCourses = this.courses;
-        this.courses = courses;
-        support.firePropertyChange("courses", oldCourses, courses);
+    public void setSessions(List<Session> sessions) {
+        List<Session> oldSessions = this.sessions;
+        this.sessions = sessions;
+        support.firePropertyChange("sessions", oldSessions, sessions);
     }
 
     public double getTotalDistance() {

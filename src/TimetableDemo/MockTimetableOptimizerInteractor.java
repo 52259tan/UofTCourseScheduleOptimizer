@@ -1,6 +1,6 @@
-package TimtableDemo;
+package TimetableDemo;
 
-import entity.Course;
+import entity.Session;
 import use_case.TimeTableOutputData;
 import use_case.TimetableOutputBoundary;
 
@@ -16,10 +16,10 @@ public class MockTimetableOptimizerInteractor {
 
     public void execute() {
         // Example data
-        List<Course> courses = MockData.getMockCourses();
+        List<Session> sessions = MockListSession.mockSessions();
         double distance = MockData.getMockTotalDistance();
         List<Object> mixedList = new ArrayList<>();
-        TimeTableOutputData outputdata = new TimeTableOutputData(courses, distance);
+        TimeTableOutputData outputdata = new TimeTableOutputData(sessions, distance);
 
         // Output
         outputBoundary.presentTimetableOptimizationResults(outputdata);
