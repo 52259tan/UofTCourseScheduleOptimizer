@@ -12,14 +12,33 @@ import java.util.stream.Stream;
  * @author Joshua Jang
  */
 public class DistanceManager {
-    /** Retrieve the distance and travel time between all possible building combinations that exist in the given courses.
+    /**
+     * Retrieve the distance and travel time between all possible building combinations that exist in the given courses.
+     *
      * @param courses A list of all course entities.
-     *                All sessions (lec, tut, pra) in such courses must have a buildingCode and Address.
+     * All sessions (lec, tut, pra) in such courses must have a buildingCode and Address.
      * @return A list of DistanceData instances containing origin and destination building codes,
-     *                distance, and travel time strings.
+     * distance, and travel time strings.
      */
-    public static List<DistanceData> getDistances(List<Course> courses) {
-        List<DistanceData> results = new ArrayList<>();
+    private static List<DistanceData> cache = new ArrayList<>();
+    private static final int BATCH_SIZE = 10;
+
+    public static DistanceData getDistanceData(String originCode, String destinationCode) {
+        if (cache.isEmpty()) { throw new RuntimeException("No distance cache generated. Run updateDistances() first."); }
+        else {
+            for (DistanceData dataInstance : cache) {
+                if ((dataInstance.getOrigin().equals(originCode) && dataInstance.getDestination().equals(destinationCode))
+                        ||
+                        (dataInstance.getOrigin().equals(destinationCode) && dataInstance.getDestination().equals(originCode))) {
+                    return dataInstance;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void updateDistances(List<Course> courses) {
+        cache.clear();
 
         List<String> allBuildingCodes = new ArrayList<>();
         List<String> allAddresses = new ArrayList<>();
@@ -43,7 +62,16 @@ public class DistanceManager {
             }
         }
 
-        List<List<String>> apiResults = DistanceMatrixAPI.get(allAddresses, allAddresses, "walking");
+        ArrayList<ArrayList<String>> apiResults = new ArrayList<>();
+
+        for (int i = 0; i < allAddresses.size(); i += BATCH_SIZE) {
+            List<String> sublist1 = allAddresses.subList(i, Math.min(i + BATCH_SIZE, allAddresses.size()));
+            for (int j = 0; j < allAddresses.size(); j += BATCH_SIZE) {
+                List<String> sublist2 = allAddresses.subList(j, Math.min(j + BATCH_SIZE, allAddresses.size()));
+
+                apiResults.addAll(GoogleMapsAPI.get(sublist1, sublist2, "walking"));
+            }
+        }
 
         int length = allBuildingCodes.size();
 
@@ -55,9 +83,8 @@ public class DistanceManager {
                 String duration = apiResults.get(i * length + j).get(1);
 
                 DistanceData data = new DistanceData(originCode, destinationCode, distance, duration);
-                results.add(data);
+                cache.add(data);
             }
         }
-        return results;
     }
 }

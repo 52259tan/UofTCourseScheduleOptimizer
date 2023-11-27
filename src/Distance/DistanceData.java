@@ -18,7 +18,32 @@ public class DistanceData {
         this.duration = duration;
     }
 
+    public String getOrigin() { return originCode; }
+    public String getDestination() { return destinationCode; }
+    public double getDistanceFloat()
+        {
+        return convertToMeters(distance);
+        }
+    public String getDuration() { return duration; }
+
     public String toString() {
         return String.format("%s to %s across %s in %s", originCode, destinationCode, distance, duration);
+    }
+
+    private static double convertToMeters(String distance) {
+        double result = 0.0;
+        String[] parts = distance.split(" ");
+
+        if (parts.length == 2) {
+            double value = Double.parseDouble(parts[0]);
+            String unit = parts[1].trim();
+
+            if (unit.equalsIgnoreCase("m")) {
+                result = value;
+            } else if (unit.equalsIgnoreCase("km")) {
+                result = value * 1000;
+            }
+        }
+        return result;
     }
 }
