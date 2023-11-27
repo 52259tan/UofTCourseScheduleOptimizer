@@ -30,13 +30,63 @@ public class TimeTable {
     }
 
     public String toString() {
+        //make new lines for each session
         StringBuilder result = new StringBuilder();
 
         for (Session obj : sessions) {
             result.append(obj.toString()).append(System.lineSeparator());
         }
         String session = result.toString();
-        return String.format("optimal timetable with minimal distance %s, optimal sessions are \n%s ", distance, session);
+
+        //make new lines for each address
+        StringBuilder resultBuilder1 = new StringBuilder();
+        for (String str : address1) {
+            resultBuilder1.append(str).append(System.lineSeparator());
+        }
+        // Convert StringBuilder to String
+        String address1 = resultBuilder1.toString();
+
+        StringBuilder resultBuilder2 = new StringBuilder();
+        for (String str : address2) {
+            resultBuilder2.append(str).append(System.lineSeparator());
+        }
+        // Convert StringBuilder to String
+        String address2 = resultBuilder2.toString();
+
+        StringBuilder resultBuilder3 = new StringBuilder();
+        for (String str : address3) {
+            resultBuilder3.append(str).append(System.lineSeparator());
+        }
+        // Convert StringBuilder to String
+        String address3 = resultBuilder3.toString();
+
+        StringBuilder resultBuilder4 = new StringBuilder();
+        for (String str : address4) {
+            resultBuilder4.append(str).append(System.lineSeparator());
+        }
+        // Convert StringBuilder to String
+        String address4 = resultBuilder4.toString();
+
+        StringBuilder resultBuilder5 = new StringBuilder();
+        for (String str : address5) {
+            resultBuilder5.append(str).append(System.lineSeparator());
+        }
+        // Convert StringBuilder to String
+        String address5 = resultBuilder5.toString();
+
+        return String.format("""
+                optimal timetable with minimal distance %s, optimal sessions are\s
+                %s,\s
+                 the building code in Monday is
+                %s
+                 the building code in Tuesday is
+                %s
+                the building code in Wednesday is\s
+                %s
+                the building code in Thursday is\s
+                %s
+                the building code is Friday is\s
+                %s\s""", distance, session, address1,address2, address3, address4, address5);
     }
 
     private List<String> getAddress(List<List<Object>> day) { //day: [[7,9,"location1"], [11, 12, "location2"], [14,16, "location3"]]
