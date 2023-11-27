@@ -33,10 +33,13 @@ public class MapRenderManager {
     }
 
     private static BufferedImage generateMapImage(List<String> addresses) {
-        String polyline = MapRenderAPI.getPolyline(addresses, "walking");
-        BufferedImage image = MapRenderAPI.generateMapWithPolyline(polyline, addresses);
+        if (!addresses.isEmpty()) {
+            String polyline = MapRenderAPI.getPolyline(addresses, "walking");
+            BufferedImage image = MapRenderAPI.generateMapWithPolyline(polyline, addresses);
 
-        return image;
+            return image;
+        }
+        return new BufferedImage(800, 640, BufferedImage.TYPE_INT_ARGB);
     }
 
     private static void saveImageToFile(BufferedImage image, String fileName) {

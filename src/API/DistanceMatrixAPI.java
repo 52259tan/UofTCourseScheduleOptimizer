@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class DistanceMatrixAPI {
         try {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
-            System.out.println(responseBody);
+            //System.out.println(responseBody);
 
             JSONArray rows = responseBody.getJSONArray("rows");
 

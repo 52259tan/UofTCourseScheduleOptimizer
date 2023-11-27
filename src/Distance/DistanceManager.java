@@ -62,14 +62,14 @@ public class DistanceManager {
             }
         }
 
-        ArrayList<ArrayList<String>> apiResults = new ArrayList<>();
+        List<List<String>> apiResults = new ArrayList<>();
 
         for (int i = 0; i < allAddresses.size(); i += BATCH_SIZE) {
             List<String> sublist1 = allAddresses.subList(i, Math.min(i + BATCH_SIZE, allAddresses.size()));
             for (int j = 0; j < allAddresses.size(); j += BATCH_SIZE) {
                 List<String> sublist2 = allAddresses.subList(j, Math.min(j + BATCH_SIZE, allAddresses.size()));
 
-                apiResults.addAll(GoogleMapsAPI.get(sublist1, sublist2, "walking"));
+                apiResults.addAll(DistanceMatrixAPI.get(sublist1, sublist2, "walking"));
             }
         }
 

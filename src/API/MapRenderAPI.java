@@ -55,6 +55,7 @@ public class MapRenderAPI {
      * @return A string in the encoded polyline format, which can be then used to render path overlays.
      */
     public static String getPolyline(List<String> waypoints, String mode) {
+        if (waypoints.size() < 2) { return ""; }
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&mode=%s&waypoints=%s&key=%s";
 
