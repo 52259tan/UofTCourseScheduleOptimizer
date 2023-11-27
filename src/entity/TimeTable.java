@@ -30,7 +30,13 @@ public class TimeTable {
     }
 
     public String toString() {
-        return String.format("optimal timetable with minimal distance %s, optimal sessions are %s", distance, sessions);
+        StringBuilder result = new StringBuilder();
+
+        for (Session obj : sessions) {
+            result.append(obj.toString()).append(System.lineSeparator());
+        }
+        String session = result.toString();
+        return String.format("optimal timetable with minimal distance %s, optimal sessions are \n%s ", distance, session);
     }
 
     private List<String> getAddress(List<List<Object>> day) { //day: [[7,9,"location1"], [11, 12, "location2"], [14,16, "location3"]]
