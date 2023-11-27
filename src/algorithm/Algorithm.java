@@ -1,5 +1,6 @@
 package algorithm;
 
+import Distance.DistanceManager;
 import entity.Course;
 import entity.Session;
 import entity.TimeTable;
@@ -83,12 +84,13 @@ public class Algorithm {
             data3.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
             data4.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
             data5.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
+            //update courses
+            DistanceManager.updateDistances(courses);
             // add the total distances of one timeTable, the index of allDistance and flattenTimeTable should represent the same timeTable
             allDistances.add(getDistance(data1) + getDistance(data2) + getDistance(data3) + getDistance(data4) + getDistance(data5));
         }
         // Find the index of the minimum distance
         int minIndex = findMinIndex(allDistances);
-
         List<Session> optimalSessions = flattenTimeTable.get(minIndex);
         Double optimalDistance = allDistances.get(minIndex);
         return new TimeTable(optimalSessions, data1, data2, data3, data4, data5, optimalDistance);
