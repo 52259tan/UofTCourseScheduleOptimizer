@@ -24,14 +24,37 @@ public class AllPossibleSessions {
         List<Session> list3 = course.getPraSessions();
 
         for (Session element1 : list1) {
-            for (Session element2 : list2) {
+            if (!list2.isEmpty()) {
+                if (!list3.isEmpty()) {
+                    for (Session element2 : list2) {
+                        for (Session element3 : list3) {
+                            List<Session> combination = new ArrayList<>();
+                            combination.add(element1);
+                            combination.add(element2);
+                            combination.add(element3);
+                            allCombinations.add(combination);
+                        }
+                    }
+                }else {
+                    for (Session element2 : list2) {
+                        List<Session> combination = new ArrayList<>();
+                        combination.add(element1);
+                        combination.add(element2);
+                        allCombinations.add(combination);
+                    }
+                }
+            } else if (!list3.isEmpty()) {
                 for (Session element3 : list3) {
                     List<Session> combination = new ArrayList<>();
                     combination.add(element1);
-                    combination.add(element2);
                     combination.add(element3);
                     allCombinations.add(combination);
+
                 }
+            }else {
+                List<Session> combination = new ArrayList<>();
+                combination.add(element1);
+                allCombinations.add(combination);
             }
         }
 
@@ -40,7 +63,6 @@ public class AllPossibleSessions {
             List<Session> combination = iterator.next();
 
             if (combination.size() == 1) {
-                allCombinations.add(combination);
                 return allCombinations;
             } else if (combination.size() == 2 || combination.size() == 3) {
                 for (int i = 0; i < combination.size(); i++) {
@@ -49,12 +71,20 @@ public class AllPossibleSessions {
                             List<Integer> days = hasOverlappingDay(combination.get(i).getDay(), combination.get(j).getDay());
                             List<Integer> start = new ArrayList<>();
                             List<Integer> end = new ArrayList<>();
+                            List<Integer> index1 = new ArrayList<>();
+                            List<Integer> index2 = new ArrayList<>();
+                            for (Integer day : days){
+                                index1.add(combination.get(i).getDay().indexOf(day));
+                                index2.add(combination.get(i).getDay().indexOf(day));
+                            }
 
-                            for (Integer day : days) {
-                                start.add(combination.get(i).getStartTime().get(day));
-                                end.add(combination.get(i).getEndTime().get(day));
-                                start.add(combination.get(j).getStartTime().get(day));
-                                end.add(combination.get(j).getEndTime().get(day));
+                            for (Integer in : index1) {
+                                start.add(combination.get(i).getStartTime().get(in));
+                                end.add(combination.get(i).getEndTime().get(in));
+                            }
+                            for (Integer in : index2){
+                                start.add(combination.get(j).getStartTime().get(in));
+                                end.add(combination.get(j).getEndTime().get(in));
                             }
 
                             if (checkNoOverlap(start, end)) {
