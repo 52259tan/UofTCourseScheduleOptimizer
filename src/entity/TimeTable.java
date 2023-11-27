@@ -33,7 +33,7 @@ public class TimeTable {
     private List<String> getAddress(List<List<Object>> day) { //day: [[7,9,"location1"], [11, 12, "location2"], [14,16, "location3"]]
         final String postfix = ", Toronto, Ontario, Canada";
         List<String> address = new ArrayList<>();
-        for (List<Object> info: day) {
+        for (List<Object> info: day){
             address.add(info.get(2) + postfix);
         }
         return address; //["address1", "address2", "address3"]
