@@ -21,6 +21,11 @@ public class getDistances {
      * @return A list of Session objects
      */
     public static Double getDistance(List<List<Object>> data) {
+        Double distance = 0.0;
+        if (data.get(0).isEmpty()){
+            return distance;
+        }
+
         //sample data1 [[7,8,"buildingCode1"], [9,10,"buildingCode2"]]
         List<String> buildingCode = new ArrayList<>();
         for (List<Object> classData : data) { //sample classData : [7,8,"buildingCode1"]
@@ -28,7 +33,6 @@ public class getDistances {
         } //sample buildingCode : ["buildingCode1", "buildingCode2", "buildingCode3"]
 
         //get distance between each two address
-        Double distance = 0.0;
         List<List<String>> buildingCodePair = getConsecutivePairs(buildingCode); // [["buildingCode1","buildingCode2"],["buildingCode2","buildingCode3"]]
 
         for (List<String> pair : buildingCodePair) { //["buildingCode1","buildingCode2"]
@@ -38,7 +42,7 @@ public class getDistances {
     }
 
 
-    private static List<List<String>> getConsecutivePairs(List<String> inputList) {
+    public static List<List<String>> getConsecutivePairs(List<String> inputList) {
         List<List<String>> pairs = new ArrayList<>();
 
         for (int i = 0; i < inputList.size() - 1; i++) {
