@@ -24,14 +24,37 @@ public class AllPossibleSessions {
         List<Session> list3 = course.getPraSessions();
 
         for (Session element1 : list1) {
-            for (Session element2 : list2) {
+            if (!list2.isEmpty()) {
+                if (!list3.isEmpty()) {
+                    for (Session element2 : list2) {
+                        for (Session element3 : list3) {
+                            List<Session> combination = new ArrayList<>();
+                            combination.add(element1);
+                            combination.add(element2);
+                            combination.add(element3);
+                            allCombinations.add(combination);
+                        }
+                    }
+                }else {
+                    for (Session element2 : list2) {
+                        List<Session> combination = new ArrayList<>();
+                        combination.add(element1);
+                        combination.add(element2);
+                        allCombinations.add(combination);
+                    }
+                }
+            } else if (!list3.isEmpty()) {
                 for (Session element3 : list3) {
                     List<Session> combination = new ArrayList<>();
                     combination.add(element1);
-                    combination.add(element2);
                     combination.add(element3);
                     allCombinations.add(combination);
+
                 }
+            }else {
+                List<Session> combination = new ArrayList<>();
+                combination.add(element1);
+                allCombinations.add(combination);
             }
         }
 
@@ -40,7 +63,6 @@ public class AllPossibleSessions {
             List<Session> combination = iterator.next();
 
             if (combination.size() == 1) {
-                allCombinations.add(combination);
                 return allCombinations;
             } else if (combination.size() == 2 || combination.size() == 3) {
                 for (int i = 0; i < combination.size(); i++) {
