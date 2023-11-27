@@ -29,8 +29,15 @@ public class TimeTable {
 
     }
 
+    public String toString() {
+        return String.format("optimal timetable with minimal distance %s, optimal sessions are %s", distance, sessions);
+    }
+
     private List<String> getAddress(List<List<Object>> day) { //day: [[7,9,"location1"], [11, 12, "location2"], [14,16, "location3"]]
         final String postfix = ", Toronto, Ontario, Canada";
+        if (day.get(0).isEmpty()){
+            return new ArrayList<>();
+        }
         List<String> address = new ArrayList<>();
         for (List<Object> info : day) {
             address.add(info.get(2) + postfix);
