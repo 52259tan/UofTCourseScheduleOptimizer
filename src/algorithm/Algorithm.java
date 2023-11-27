@@ -37,7 +37,7 @@ public class Algorithm {
      * @param courses the list of Courses that the user selected
      * @return A TimeTable Object which contains list of sessions, the final optimal choice Wow!!!
      */
-    private static TimeTable getOptimalChoice(List<Course> courses) {
+    public static TimeTable getOptimalChoice(List<Course> courses) {
         // allTImeTable structure below
         // [
         // [[sessions for course1], [sessions for course2],[sessions for course3],[sessions for course4], [sessions for course5]]
@@ -98,7 +98,9 @@ public class Algorithm {
 
 
     public static Integer findMinIndex(List<Double> allDistances) {
-
+        if (allDistances.isEmpty()){
+            System.out.println("TimeTable Not Available");
+        }
         double minValue = allDistances.get(0);
         int minIndex = 0;
 
