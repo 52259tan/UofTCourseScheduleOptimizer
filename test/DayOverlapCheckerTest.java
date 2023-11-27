@@ -18,7 +18,7 @@ public class DayOverlapCheckerTest {
     private List<Integer> shortList;
 
     /**
-     * Pre-made lists for easy use
+     * Pre-made lists for ease of use
      */
     @Before
     public void init(){
@@ -31,11 +31,9 @@ public class DayOverlapCheckerTest {
      * Fail statement activates if the method returns anything
      */
     @Test
-    public void testNullList() {
-        List<Integer> list1 = null;
-        List<Integer> list2 = null;
+    public void testNulls() {
         try {
-            DayOverlapChecker.hasOverlappingDay(list1, list2);
+            DayOverlapChecker.hasOverlappingDay(null, null);
             fail("Exception failed to throw");
         }
         catch (IllegalArgumentException e) {
@@ -64,7 +62,7 @@ public class DayOverlapCheckerTest {
 
     /**
      * Checks that the function terminates given list1 being shorter and gives the correct result
-     * This test currently fails and needs to be debugged, run test for expected vs. actual
+     * @see ""This test currently fails and needs to be debugged, run test for expected vs. actual""
      */
     @Test
     public void testShorterList() {
@@ -73,7 +71,7 @@ public class DayOverlapCheckerTest {
 
     /**
      * Checks that the function terminates given list1 being longer and gives the correct result
-     * This test currently fails and needs to be debugged, run test for expected vs. actual
+     * @see ""This test currently fails and needs to be debugged, run test for expected vs. actual""
      */
     @Test
     public void testLongerList() {
