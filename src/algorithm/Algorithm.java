@@ -65,25 +65,48 @@ public class Algorithm {
             data5 = new ArrayList<>();
             for (Session ses : timeTable) { //sample info in [starTime,endTime,Address] :  [[7,9],[8,10],["location1","location2"]]
                 for (Integer day : ses.getDay()) { //sample days:[1,3] which 1 corresponds to [7,8,"location1"] and 3 corresponds to [9,10,"location2"]
+                    Integer index = ses.getDay().indexOf(day);
                     if (day.equals(1)) {
-                        data1.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode())); //sample data in data1 [[7,8,"location1"]]
+                        data1.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index))); //sample data in data1 [[7,8,"location1"]]
                     } else if (day.equals(2)) {
-                        data2.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
+                        data2.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
                     } else if (day.equals(3)) {
-                        data3.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
+                        data3.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
                     } else if (day.equals(4)) {
-                        data4.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
+                        data4.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
                     } else if (day.equals(5)) {
-                        data5.add(List.of(ses.getStartTime(), ses.getEndTime(), ses.getBuildingCode()));
+                        data5.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
                     }
                 }
             }
             // Sort list data based on the startTime of each class, so the classes are in chronological order in each day
-            data1.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0))); //sample data1 [[7,8,"location1"], [9,10,"location2"]]
-            data2.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
-            data3.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
-            data4.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
-            data5.sort(Comparator.comparingInt(sublist -> (Integer) sublist.get(0)));
+            if (data1.isEmpty()){
+                data1.add(new ArrayList<>());
+            }else {
+                data1.sort(Comparator.comparingInt(sublist -> (int) sublist.get(0)));
+            }//sample data1 [[7,8,"location1"], [9,10,"location2"]]
+            if (data2.isEmpty()){
+                data2.add(new ArrayList<>());
+            }else {
+                data2.sort(Comparator.comparingInt(sublist -> (int) sublist.get(0)));
+            }
+            if (data3.isEmpty()){
+                data3.add(new ArrayList<>());
+            }else {
+                data3.sort(Comparator.comparingInt(sublist -> (int) sublist.get(0)));
+            }
+            if (data4.isEmpty()){
+                data4.add(new ArrayList<>());
+            }else {
+                data4.sort(Comparator.comparingInt(sublist -> (int) sublist.get(0)));
+            }
+            if (data5.isEmpty()){
+                data5.add(new ArrayList<>());
+            }else {
+                data5.sort(Comparator.comparingInt(sublist -> (int) sublist.get(0)));
+            }
+
+
             //update courses
             DistanceManager.updateDistances(courses);
             // add the total distances of one timeTable, the index of allDistance and flattenTimeTable should represent the same timeTable
