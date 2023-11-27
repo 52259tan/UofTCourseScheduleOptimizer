@@ -71,12 +71,20 @@ public class AllPossibleSessions {
                             List<Integer> days = hasOverlappingDay(combination.get(i).getDay(), combination.get(j).getDay());
                             List<Integer> start = new ArrayList<>();
                             List<Integer> end = new ArrayList<>();
+                            List<Integer> index1 = new ArrayList<>();
+                            List<Integer> index2 = new ArrayList<>();
+                            for (Integer day : days){
+                                index1.add(combination.get(i).getDay().indexOf(day));
+                                index2.add(combination.get(i).getDay().indexOf(day));
+                            }
 
-                            for (Integer day : days) {
-                                start.add(combination.get(i).getStartTime().get(day));
-                                end.add(combination.get(i).getEndTime().get(day));
-                                start.add(combination.get(j).getStartTime().get(day));
-                                end.add(combination.get(j).getEndTime().get(day));
+                            for (Integer in : index1) {
+                                start.add(combination.get(i).getStartTime().get(in));
+                                end.add(combination.get(i).getEndTime().get(in));
+                            }
+                            for (Integer in : index2){
+                                start.add(combination.get(j).getStartTime().get(in));
+                                end.add(combination.get(j).getEndTime().get(in));
                             }
 
                             if (checkNoOverlap(start, end)) {
