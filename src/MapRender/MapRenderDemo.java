@@ -30,7 +30,7 @@ public class MapRenderDemo {
         TimeTable timeTable = getOptimalChoice(courses);
         System.out.println(timeTable);
 
-        MapRenderManager.generateMapsPNG(timeTable);
+        MapRenderManager.generateMapsPNG(timeTable, "mapimgs");
     }
 
 

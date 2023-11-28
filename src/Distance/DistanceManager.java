@@ -12,17 +12,17 @@ import java.util.stream.Stream;
  * @author Joshua Jang
  */
 public class DistanceManager {
-    /**
-     * Retrieve the distance and travel time between all possible building combinations that exist in the given courses.
-     *
-     * @param courses A list of all course entities.
-     * All sessions (lec, tut, pra) in such courses must have a buildingCode and Address.
-     * @return A list of DistanceData instances containing origin and destination building codes,
-     * distance, and travel time strings.
-     */
     private static List<DistanceData> cache = new ArrayList<>();
     private static final int BATCH_SIZE = 10;
 
+    /**
+     * Assuming updateDistances() has been called, return the distance/duration info between two buildings
+     * as a DistanceData object.
+     *
+     * @param originCode Origin building code. Interchangable with destinationCode.
+     * @param destinationCode Destination building code. Interchangable with originCode.
+     * @return A corresponding DistanceData object with getDistanceFloat() and getDuration() getter methods.
+     */
     public static DistanceData getDistanceData(String originCode, String destinationCode) {
         if (cache.isEmpty()) { throw new RuntimeException("No distance cache generated. Run updateDistances() first."); }
         else {
@@ -37,6 +37,15 @@ public class DistanceManager {
         return null;
     }
 
+    /**
+     * Call the DistanceMatrix API and generate a cache consisting of all possible distance combinations.
+     * Every time a new list of courses are to be worked with, this method must be called for getDistanceData() to work.
+     *
+     * @param courses A list of all course entities.
+     * All sessions (lec, tut, pra) in such courses must have a buildingCode and Address.
+     * A list of DistanceData instances containing origin and destination building codes,
+     * distance, and travel time strings will be genrated and stored.
+     */
     public static void updateDistances(List<Course> courses) {
         cache.clear();
 

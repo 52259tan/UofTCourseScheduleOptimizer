@@ -16,6 +16,15 @@ import java.util.Arrays;
  */
 public class MapRenderManager {
     private static final List<String> days = new ArrayList<>(Arrays.asList("MON", "TUE", "WED", "THU", "FRI"));
+
+    /**
+     * Generate 5 Map images with waypoint markers and path/route line(s), as a list of BufferedImages.
+     *
+     * @param timeTable A timetable entity generated from the optimisation algorithm.
+     * The timetable must be able to return a list of addresses by calling getAddressX().
+     * @return A list of BufferedImage objects, which can be used to directly display images on screen,
+     * without having to save to disk first. If saving to disk is the goal, use generateMapsPNG().
+     */
     public static List<BufferedImage> generateMapsBuffer(TimeTable timeTable) {
         BufferedImage monImg = generateMapImage(timeTable.getAddress1());
         BufferedImage tueImg = generateMapImage(timeTable.getAddress2());
@@ -25,10 +34,18 @@ public class MapRenderManager {
 
         return new ArrayList<>(Arrays.asList(monImg, tueImg, wedImg, thuImg, friImg));
     }
-    public static void generateMapsPNG(TimeTable timeTable) {
+
+    /**
+     * Generate 5 Map images with waypoint markers and path/route line(s), and save them to disk.
+     *
+     * @param timeTable A timetable entity generated from the optimisation algorithm.
+     * The timetable must be able to return a list of addresses by calling getAddressX().
+     * @param subdir The directory/folder inside the project root in which the images are to be saved.
+     */
+    public static void generateMapsPNG(TimeTable timeTable, String subdir) {
         List<BufferedImage> bufferedImages = generateMapsBuffer(timeTable);
         for(int i = 0; i < 5; i++) {
-            saveImageToFile(bufferedImages.get(i), "/mapimgs/map_" + days.get(i) + ".png");
+            saveImageToFile(bufferedImages.get(i),  subdir + "/map_" + days.get(i) + ".png");
         }
     }
 
