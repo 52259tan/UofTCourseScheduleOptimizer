@@ -67,13 +67,22 @@ public class AllPossibleTimeTables {
                         List<Integer> days = hasOverlappingDay(session1.getDay(), session2.getDay());
                         List<Integer> start = new ArrayList<>();
                         List<Integer> end = new ArrayList<>();
-
-                        for (Integer day : days) {
-                            start.add(session1.getStartTime().get(day));
-                            end.add(session1.getEndTime().get(day));
-                            start.add(session2.getStartTime().get(day));
-                            end.add(session2.getEndTime().get(day));
+                        List<Integer> index1 = new ArrayList<>();
+                        List<Integer> index2 = new ArrayList<>();
+                        for (Integer day : days){
+                            index1.add(session1.getDay().indexOf(day));
+                            index2.add(session2.getDay().indexOf(day));
                         }
+
+                        for (Integer in : index1) {
+                            start.add(session1.getStartTime().get(in));
+                            end.add(session1.getEndTime().get(in));
+                        }
+                        for (Integer in : index2){
+                            start.add(session2.getStartTime().get(in));
+                            end.add(session2.getEndTime().get(in));
+                        }
+
                         if (!checkNoOverlap(start, end)) {
                             return false;
                         }
