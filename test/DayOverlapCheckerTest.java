@@ -62,7 +62,6 @@ public class DayOverlapCheckerTest {
 
     /**
      * Checks that the function terminates given list1 being shorter and gives the correct result
-     * @see ""This test currently fails and needs to be debugged, run test for expected vs. actual""
      */
     @Test
     public void testShorterList() {
@@ -71,7 +70,6 @@ public class DayOverlapCheckerTest {
 
     /**
      * Checks that the function terminates given list1 being longer and gives the correct result
-     * @see ""This test currently fails and needs to be debugged, run test for expected vs. actual""
      */
     @Test
     public void testLongerList() {

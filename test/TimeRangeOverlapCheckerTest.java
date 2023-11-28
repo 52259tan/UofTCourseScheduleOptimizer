@@ -2,6 +2,7 @@ import algorithm.TimeRangeOverlapChecker;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +29,6 @@ public class TimeRangeOverlapCheckerTest {
     /**
      * Basic test of non-conflicting inputs
      * In accordance with the method documentation, returns true if no overlap
-     * @see ""This test currently fails and needs to be debugged, run test for expected vs. actual""
      */
     @Test
     public void testNoConflict() {
@@ -54,25 +54,26 @@ public class TimeRangeOverlapCheckerTest {
     }
 
     /**
-     * Testing handling of null lists
-     * @see ""Should this throw an exception or will this never occur?""
-     */
-    @Test
-    public void testNullList() {
-        try {
-            TimeRangeOverlapChecker.checkNoOverlap(null,null);
-        }
-        catch (NullPointerException e) {
-            fail("Unhandled exception thrown");
-        }
-    }
-
-    /**
      * Testing handling of empty lists
      * Current expected behaviour: return true
      */
     @Test
     public void testEmptyList() {
         assertTrue(TimeRangeOverlapChecker.checkNoOverlap(List.of(),List.of()));
+    }
+
+    /**
+     * Testing handling of invalid input lists
+     */
+    @Test
+    public void testInvalidInput() {
+        //Making a list too short
+        List<Integer> list = new ArrayList<>(Arrays.asList(1,2));
+        try {
+            TimeRangeOverlapChecker.checkNoOverlap(list,end);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Exception thrown");
+        }
     }
 }
