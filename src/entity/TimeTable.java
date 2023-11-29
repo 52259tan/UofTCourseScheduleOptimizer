@@ -132,7 +132,7 @@ public class TimeTable {
         }
         List<String> address = new ArrayList<>();
         for (List<Object> info : day) {
-            address.add(info.get(2) + postfix);
+            address.add(info.get(3) + postfix);
         }
         return address; //["address1", "address2", "address3"]
     }
