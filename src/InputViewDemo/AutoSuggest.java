@@ -1,4 +1,5 @@
 package InputViewDemo;
+import ErrorView.ErrorView;
 import gui.CourseController;
 
 import java.awt.*;
@@ -9,17 +10,27 @@ import java.util.List;
 import javax.swing.*;
 
 public class AutoSuggest extends JPanel{
-
-    JButton addcourse = new JButton();
     private final JTextField tf;
     private final JComboBox combo = new JComboBox();
     private final Vector<String> v = new Vector<String>();
     private final CourseController controller;
-
-    private final List<JTextField> courseFields = new ArrayList<>();
+    private List<JTextField> courseFields = new ArrayList<>();
     private final JPanel coursePanel;
+    private final String[] allCourses;
+
+    JButton map1;
+    JButton map2;
+    JButton map3;
+    JButton map4;
+    JButton map5;
+
     public AutoSuggest(CourseController controller) throws IOException {
         this.controller = controller;
+        allCourses = AvailableCourses.getAvailableCourses();
+
+        for(int i=0;i<allCourses.length;i++){
+            v.addElement(allCourses[i]);
+        }
         setLayout(new GridLayout(1,2));
         combo.setEditable(true);
         tf = (JTextField) combo.getEditor().getEditorComponent();
@@ -50,11 +61,16 @@ public class AutoSuggest extends JPanel{
                 int code = e.getKeyCode();
                 if(code==KeyEvent.VK_ENTER) {
                     if(!v.contains(text)) {
-                        v.addElement(text);
+                        //v.addElement(text);
                         Collections.sort(v);
                         setModel(getSuggestedModel(v, text), text);
                     }
                     hide_flag = true;
+                    if (Arrays.asList(allCourses).contains(tf.getText().toUpperCase())){
+                    addCourseField();}
+                    else{
+                        ErrorView.ErrorViewInvalidCourseCode(tf.getText());
+                    }
                 }else if(code==KeyEvent.VK_ESCAPE) {
                     hide_flag = true;
                 }else if(code==KeyEvent.VK_RIGHT) {
@@ -69,14 +85,10 @@ public class AutoSuggest extends JPanel{
                 }
             }
         });
-        String[] countries = AvailableCourses.getAvailableCourses();
 
-        for(int i=0;i<countries.length;i++){
-            v.addElement(countries[i]);
-        }
         setModel(new DefaultComboBoxModel(v), "");
         JPanel leftPanel = new JPanel(new GridLayout(3,1));
-        leftPanel.setBorder(BorderFactory.createTitledBorder("AutoSuggestion Box"));
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Input yo courses here"));
         leftPanel.add(combo, BorderLayout.NORTH);
 
         leftPanel.add(createCoursesButton());
@@ -97,6 +109,7 @@ public class AutoSuggest extends JPanel{
     private void addCourseField() {
         JTextField courseField = new JTextField(40);
         courseField.setText(tf.getText().toUpperCase());
+        tf.setText("");
         courseField.setFont(new Font("Arial", Font.BOLD,16));
         courseFields.add(courseField);
         courseField.setMaximumSize(new Dimension(Integer.MAX_VALUE, courseField.getPreferredSize().height));
@@ -122,11 +135,17 @@ public class AutoSuggest extends JPanel{
     }
 
     private JPanel createMapsButton(){
-        JButton map1 = createButton("Mon. Map", this::map1Clicked);
-        JButton map2 = createButton("Tues. Map", this::map2Clicked );
-        JButton map3 = createButton("Wed. Map", this::map3Clicked);
-        JButton map4 = createButton("Thur. Map", this::map4Clicked);
-        JButton map5 = createButton("Fri. Map", this::map5Clicked);
+        map1 = createButton("Mon. Map", this::map1Clicked);
+        map2 = createButton("Tues. Map", this::map2Clicked );
+        map3 = createButton("Wed. Map", this::map3Clicked);
+        map4 = createButton("Thur. Map", this::map4Clicked);
+        map5 = createButton("Fri. Map", this::map5Clicked);
+
+        map1.setEnabled(false);
+        map2.setEnabled(false);
+        map3.setEnabled(false);
+        map4.setEnabled(false);
+        map5.setEnabled(false);
 
         JPanel mapsPanel = new JPanel(new GridLayout(1, 5));
         mapsPanel.add(map1);
@@ -158,22 +177,57 @@ public class AutoSuggest extends JPanel{
         addCourseField();
     }
     private void submitButtonClicked(ActionEvent e){
-        JButton sourceButton = (JButton) e.getSource(); // Get the button that was clicked
-        sourceButton.setBackground(Color.GREEN);
-        sourceButton.setForeground(Color.WHITE);
-        sourceButton.setOpaque(true);
-        sourceButton.setBorderPainted(false);
-        sourceButton.setContentAreaFilled(true);
-
-        List<String> courses = new ArrayList<>();
-        for (JTextField courseField : courseFields) {
-            String courseCode = courseField.getText().trim();
-            if (!courseCode.isEmpty()) {
-                courses.add(courseCode);
+        // Get rid of empty strings
+        List<JTextField> place_holder = new ArrayList<>();
+        for (JTextField courseCode: courseFields){
+            if (!courseCode.getText().trim().isEmpty()){
+                place_holder.add(courseCode);
             }
         }
+        courseFields = place_holder;
+        if (courseFields.isEmpty()){
+            ErrorView.ErrorViewNoInput();
+            return;
+        }
+        // Get a list of invalid course codes, empty list if none.
+        List<String> invalidCodes = new ArrayList<>();
+        for (JTextField courseCode: courseFields){
+            if (!Arrays.asList(allCourses).contains(courseCode.getText())){
+                invalidCodes.add(courseCode.getText());
+            }
+        }
+        // If there are no invalid course codes, check if there are both Fall or Winter term in the input.
+        if (invalidCodes.size()==0){
+            Set<String> hashSet = new HashSet<>();
+            for (JTextField courseCode: courseFields){
+                hashSet.add(String.valueOf(courseCode.getText().charAt(courseCode.getText().length() - 1)));
+                }
+            if (hashSet.contains("F") && hashSet.contains("S")){
+                ErrorView.ErrorViewTermCodeMismatch();
+            }
+            else{
+                JButton sourceButton = (JButton) e.getSource(); // Get the button that was clicked
+                //sourceButton.setBackground(Color.GREEN);
+                //sourceButton.setForeground(Color.WHITE);
+                sourceButton.setOpaque(true);
+                sourceButton.setBorderPainted(false);
+                sourceButton.setContentAreaFilled(true);
 
-        controller.execute(courses);
+                List<String> courses = new ArrayList<>();
+                for (JTextField courseField : courseFields) {
+                    String courseCode = courseField.getText().trim();
+                    if (!courseCode.isEmpty()) {
+                        courses.add(courseCode);
+                    }
+                }
+                controller.execute(courses);
+                map1.setEnabled(true);
+                map2.setEnabled(true);
+                map3.setEnabled(true);
+                map4.setEnabled(true);
+                map5.setEnabled(true);}}
+        // If invalid course codes exist, stop and throw a pop-up
+        else{ErrorView.ErrorViewInvalidCourseCode(invalidCodes);}
     }
 
     private JButton createButton(String text, ActionListener actionListener) {

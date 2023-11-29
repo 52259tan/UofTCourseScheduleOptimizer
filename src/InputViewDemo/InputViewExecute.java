@@ -10,6 +10,7 @@ import gui.CourseInputView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Course;
@@ -27,14 +28,6 @@ public class InputViewExecute {
             CourseController mockController = new CourseController() {
                 @Override
                 public void execute(List<String> courseCodes) {
-                    ArrayList<Session> sessionList = new ArrayList<Session>();
-                    for (String code: courseCodes){
-                         Course course = new Course(CourseAPI.getCourse(code));
-                         sessionList.add(course.getLecSessions().get(0));
-                         sessionList.add(course.getTutSessions().get(0));
-                    }
-
-                    TimetableExecute.TimetableExecute(sessionList);
 
                     // Print the submitted course codes
                     System.out.println("Submitted courses: " + courseCodes);
@@ -46,16 +39,19 @@ public class InputViewExecute {
                         System.out.println("Processing: " + course.getCourseName());
                         courses.add(course);
                     }
+                    List<Session> sessionList = new ArrayList<>();
+                    //sessionList = Algorithm.getOptimalChoice(courses).getSessions();
+                    for (Course course: courses){
+                        if (course.getLecSessions().size()!=0){
+                        sessionList.add(course.getLecSessions().get(0));
+                    }}
+                    TimetableExecute.TimetableExecute(sessionList);
 
                     CourseInputData inputData = new CourseInputData(courses);
 
                     // Verification Logic
                     boolean isCorrect = verifyInputData(inputData, courseCodes);
                     System.out.println("Verification Passed: " + isCorrect);
-
-
-
-
                 }
 
                 private boolean verifyInputData(CourseInputData inputData, List<String> expectedCodes) {
@@ -76,8 +72,15 @@ public class InputViewExecute {
 
             JFrame frame = new JFrame("Course Input Test");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            CourseInputView inputView = new CourseInputView(mockController);
-            frame.getContentPane().add(inputView);
+//            CourseInputView inputView = new CourseInputView(mockController);
+//            frame.getContentPane().add(inputView);
+            AutoSuggest autoSuggest;
+            try {
+                autoSuggest = new AutoSuggest(mockController);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            frame.getContentPane().add(autoSuggest);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
