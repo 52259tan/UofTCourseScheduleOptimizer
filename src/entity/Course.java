@@ -24,7 +24,6 @@ public class Course {
             } else if (type.equals("TUT")) {
                 tutSessions.add(session);
             }else{
-                praSessions.add(session);
             }}
             if (lecSessions.size()==0){validCourse=false;}
         }
