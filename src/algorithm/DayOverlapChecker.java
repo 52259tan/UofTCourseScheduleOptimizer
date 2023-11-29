@@ -14,7 +14,7 @@ public class DayOverlapChecker {
      *
      * @param list1 First list of days
      * @param list2 Second list of days
-     * @return A list of indices of overlapping days
+     * @return A list of overlapping days
      */
     public static List<Integer> hasOverlappingDay(List<Integer> list1, List<Integer> list2) {
         List<Integer> overlappingDays = new ArrayList<>();

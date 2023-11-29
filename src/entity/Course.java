@@ -1,19 +1,16 @@
 package entity;
 
-import entity.Session;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class Course {
     private String courseName;
     private List<Session> lecSessions = new ArrayList<>();
     private List<Session> tutSessions = new ArrayList<>();
-    private List<Session> praSessions = new ArrayList<>();
     private boolean validCourse = true;
-
 
     public Course(HashMap<String, HashMap<String, ArrayList<HashMap<String,Object>>>> courseInfo){
         courseName = courseInfo.keySet().iterator().next().toString();
@@ -28,7 +25,6 @@ public class Course {
             }else{
                 praSessions.add(session);
             }
-        }
         if (lecSessions.size()==0){validCourse=false;}
     }
 
@@ -52,7 +48,6 @@ public class Course {
     public String getCourseName() {
         return courseName;
     }
-
     public boolean isValidCourse(){
         return this.validCourse;
     }
