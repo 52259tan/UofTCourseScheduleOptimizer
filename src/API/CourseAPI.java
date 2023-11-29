@@ -14,12 +14,12 @@ public class CourseAPI {
 
     private static JSONObject getCourseInfoRaw(String course){
         /**
-        precondition:
-        String course must be a valid course code.
-        Valid course code: "COURSECODE" + " -TERMCODE"
-        Example usage:
-        .getCourseInfoRaw("CSC207H1 -F") //COURSECODE = "CSC207H1", TERMCODE = " -F" for fall term
-        returns a JSON object
+         precondition:
+         String course must be a valid course code.
+         Valid course code: "COURSECODE" + " -TERMCODE"
+         Example usage:
+         .getCourseInfoRaw("CSC207H1 -F") //COURSECODE = "CSC207H1", TERMCODE = " -F" for fall term
+         returns a JSON object
          */
         //Parsing course +
         String[] courseArray = course.split("\\s*-\\s*");
@@ -91,14 +91,14 @@ public class CourseAPI {
                 String building = ((JSONObject) times.get(k)).getJSONObject("building").getString("buildingCode");
 
                 if (building.length() != 0){
-                HashMap<String, Object> weekday = new HashMap<>();
-                weekday.put("Day",day);
-                weekday.put("Start", starttime);
-                weekday.put("endtime", endtime);
-                weekday.put("building", building);
-                sectionMeetingTimes.add(weekday);}
+                    HashMap<String, Object> weekday = new HashMap<>();
+                    weekday.put("Day",day);
+                    weekday.put("Start", starttime);
+                    weekday.put("endtime", endtime);
+                    weekday.put("building", building);
+                    sectionMeetingTimes.add(weekday);}
             }
-            lecTutSectionInfo.put(lecturecode, sectionMeetingTimes);
+            if (sectionMeetingTimes.size()!=0){lecTutSectionInfo.put(lecturecode, sectionMeetingTimes);}
         }
         retCourseInfo.put(code + " -" + term, lecTutSectionInfo);
         //System.out.println(retCourseInfo);
@@ -114,66 +114,66 @@ public class CourseAPI {
     }
 
 
-        private static void availableCourses () {
-            /**
-             * This method has the sole purpose of creating a textfile containing all of the
-             * courses that Arts and Science department has.
-             */
-            try {
-                String fileName = "availableCourses.txt";
-                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+    private static void availableCourses () {
+        /**
+         * This method has the sole purpose of creating a textfile containing all of the
+         * courses that Arts and Science department has.
+         */
+        try {
+            String fileName = "availableCourses.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
-                // k goes up to 183 because we assume there are only 183 pages.
-                for (int k = 1; k <= 183; k++) {
-                    JSONObject rawJson = availableCourses_helper(k);
-                    JSONObject payload = rawJson.getJSONObject("payload");
-                    JSONObject pageableCourse = payload.getJSONObject("pageableCourse");
-                    JSONArray courses = pageableCourse.getJSONArray("courses");
-                    int i = courses.length();
-                    for (int j=1; j <= i-1; j++) {
-                        JSONObject fullCoursesInfo = (JSONObject) courses.get(j);
-                        String courseCode = fullCoursesInfo.get("code").toString();
-                        String term = fullCoursesInfo.get("sectionCode").toString();
-                        writer.write(courseCode + " -" + term);
-                        writer.newLine();
-                    }
+            // k goes up to 183 because we assume there are only 183 pages.
+            for (int k = 1; k <= 183; k++) {
+                JSONObject rawJson = availableCourses_helper(k);
+                JSONObject payload = rawJson.getJSONObject("payload");
+                JSONObject pageableCourse = payload.getJSONObject("pageableCourse");
+                JSONArray courses = pageableCourse.getJSONArray("courses");
+                int i = courses.length();
+                for (int j=1; j <= i-1; j++) {
+                    JSONObject fullCoursesInfo = (JSONObject) courses.get(j);
+                    String courseCode = fullCoursesInfo.get("code").toString();
+                    String term = fullCoursesInfo.get("sectionCode").toString();
+                    writer.write(courseCode + " -" + term);
+                    writer.newLine();
                 }
-                writer.close();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
+            writer.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        private static JSONObject availableCourses_helper ( int k){
-            OkHttpClient client = new OkHttpClient();
-
-            MediaType mediaType = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(mediaType, String.format("{\"courseCodeAndTitleProps\":{\"courseCode\":\"\",\"courseTitle\":\"\",\"courseSectionCode\":\"\"},\"departmentProps\":[],\"campuses\":[],\"sessions\":[\"20239\",\"20241\",\"20239-20241\"],\"requirementProps\":[],\"instructor\":\"\",\"courseLevels\":[],\"deliveryModes\":[],\"dayPreferences\":[],\"timePreferences\":[],\"divisions\":[\"ARTSC\"],\"creditWeights\":[],\"page\":%s,\"pageSize\":20,\"direction\":\"asc\"}\n  ", k));
-            Request request = new Request.Builder()
-                    .url("https://api.easi.utoronto.ca/ttb/getPageableCourses")
-                    .post(body)
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("Accept", "application/json, text/plain, */*")
-                    .addHeader("Accept-Encoding", "gzip, deflate, br")
-                    .addHeader("Accept-Language", "en-US,en;q=0.9,zh-TW;q=0.8,zh-CN;q=0.7,zh;q=0.6")
-                    .addHeader("Connection", "keep-alive")
-                    .addHeader("Origin", "https://ttb.utoronto.ca")
-                    .addHeader("Referer", "https://ttb.utoronto.ca/")
-                    .addHeader("Sec-Fetch-Dest", "empty")
-                    .addHeader("Sec-Fetch-Mode", "cors")
-                    .addHeader("Sec-Fetch-Site", "same-site")
-                    .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36")
-                    .addHeader("sec-ch-ua", "^\\^Google")
-                    .addHeader("sec-ch-ua-mobile", "?0")
-                    .build();
-
-            try {
-                Response response = client.newCall(request).execute();
-                JSONObject responseBody = new JSONObject(response.body().string());
-                return responseBody;
-            } catch (IOException | JSONException e) {
-                throw new RuntimeException();
-            }
-        }
-
     }
+    private static JSONObject availableCourses_helper ( int k){
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, String.format("{\"courseCodeAndTitleProps\":{\"courseCode\":\"\",\"courseTitle\":\"\",\"courseSectionCode\":\"\"},\"departmentProps\":[],\"campuses\":[],\"sessions\":[\"20239\",\"20241\",\"20239-20241\"],\"requirementProps\":[],\"instructor\":\"\",\"courseLevels\":[],\"deliveryModes\":[],\"dayPreferences\":[],\"timePreferences\":[],\"divisions\":[\"ARTSC\"],\"creditWeights\":[],\"page\":%s,\"pageSize\":20,\"direction\":\"asc\"}\n  ", k));
+        Request request = new Request.Builder()
+                .url("https://api.easi.utoronto.ca/ttb/getPageableCourses")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json, text/plain, */*")
+                .addHeader("Accept-Encoding", "gzip, deflate, br")
+                .addHeader("Accept-Language", "en-US,en;q=0.9,zh-TW;q=0.8,zh-CN;q=0.7,zh;q=0.6")
+                .addHeader("Connection", "keep-alive")
+                .addHeader("Origin", "https://ttb.utoronto.ca")
+                .addHeader("Referer", "https://ttb.utoronto.ca/")
+                .addHeader("Sec-Fetch-Dest", "empty")
+                .addHeader("Sec-Fetch-Mode", "cors")
+                .addHeader("Sec-Fetch-Site", "same-site")
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36")
+                .addHeader("sec-ch-ua", "^\\^Google")
+                .addHeader("sec-ch-ua-mobile", "?0")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+            return responseBody;
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException();
+        }
+    }
+
+}
