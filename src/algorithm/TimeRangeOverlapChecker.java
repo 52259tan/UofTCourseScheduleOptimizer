@@ -20,12 +20,13 @@ public class TimeRangeOverlapChecker {
         for (int i = 0; i < size; i++) {
             for (int j = i + 1; j < size; j++) {
                 // Check if the current pair does not overlap
-                if (!(endTimes.get(i) < startTimes.get(j)) && !(startTimes.get(i) > endTimes.get(j))) {
-                    return false;
+                if (startTimes.get(i) < endTimes.get(j)) {
+                    if (startTimes.get(j) < endTimes.get(i)) {
+                        return false;
+                    }
                 }
             }
         }
-
         // No overlap found
         return true;
     }

@@ -24,34 +24,27 @@ public class AllPossibleTimeTables {
      */
     public static List<List<List<Session>>> getAllTimeTable(List<Course> courses) {
         List<List<List<Session>>> possibleTimeTable = new ArrayList<>();
-        for (List<Session> listOfSessions1 : generateCombinations(courses.get(0))) { // [[tut, lec],[tut,lec]]
-            List<List<Session>> timeTable = new ArrayList<>();
-            timeTable.add(listOfSessions1);
-            for (List<Session> listOfSessions2 : generateCombinations(courses.get(1))) {
-                if (noConflict(listOfSessions2, timeTable)){
-                    timeTable.add(listOfSessions2);
-                    for (List<Session> listOfSessions3 : generateCombinations(courses.get(2))) {
-                        if (noConflict(listOfSessions3, timeTable)){
-                            timeTable.add(listOfSessions3);
-                            for (List<Session> listOfSessions4 : generateCombinations(courses.get(3))) {
-                                if (noConflict(listOfSessions4, timeTable)){
-                                    timeTable.add(listOfSessions4);
-                                    for (List<Session> listOfSessions5 : generateCombinations(courses.get(4))) {
-                                        if (noConflict(listOfSessions5, timeTable)){
-                                            timeTable.add(listOfSessions5);
-                                            possibleTimeTable.add(timeTable);
-                                    }// [[[lec1,tu1],[lec2, tut2].....]]]
-                                    }
-                            }
-                        }
-                    }
-                }
-            }
-            }
-        }
+        generateTimeTable(courses, 0, new ArrayList<>(), possibleTimeTable);
         return possibleTimeTable;
     }
 
+    private static void generateTimeTable(List<Course> courses, int courseIndex,
+                                          List<List<Session>> currentTimetable,
+                                          List<List<List<Session>>> possibleTimeTable) {
+        if (courseIndex == courses.size()) {
+            // All courses processed, add the current timetable to the list of possible timetables
+            possibleTimeTable.add(new ArrayList<>(currentTimetable));
+            return;
+        }
+
+        for (List<Session> listOfSessions : generateCombinations(courses.get(courseIndex))) {
+            if (noConflict(listOfSessions, currentTimetable)) {
+                currentTimetable.add(listOfSessions);
+                generateTimeTable(courses, courseIndex + 1, currentTimetable, possibleTimeTable);
+                currentTimetable.remove(currentTimetable.size() - 1); // Backtrack
+            }
+        }
+    }
     /**
      * Generate all possible combinations of sessions (one Lec, one Tut, one Pra) of a course without time conflict
      *
@@ -67,13 +60,22 @@ public class AllPossibleTimeTables {
                         List<Integer> days = hasOverlappingDay(session1.getDay(), session2.getDay());
                         List<Integer> start = new ArrayList<>();
                         List<Integer> end = new ArrayList<>();
-
-                        for (Integer day : days) {
-                            start.add(session1.getStartTime().get(day));
-                            end.add(session1.getEndTime().get(day));
-                            start.add(session2.getStartTime().get(day));
-                            end.add(session2.getEndTime().get(day));
+                        List<Integer> index1 = new ArrayList<>();
+                        List<Integer> index2 = new ArrayList<>();
+                        for (Integer day : days){
+                            index1.add(session1.getDay().indexOf(day));
+                            index2.add(session2.getDay().indexOf(day));
                         }
+
+                        for (Integer in : index1) {
+                            start.add(session1.getStartTime().get(in));
+                            end.add(session1.getEndTime().get(in));
+                        }
+                        for (Integer in : index2){
+                            start.add(session2.getStartTime().get(in));
+                            end.add(session2.getEndTime().get(in));
+                        }
+
                         if (!checkNoOverlap(start, end)) {
                             return false;
                         }
