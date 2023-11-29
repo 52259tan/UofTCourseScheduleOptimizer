@@ -10,8 +10,7 @@ public class Course {
     private String courseName;
     private List<Session> lecSessions = new ArrayList<>();
     private List<Session> tutSessions = new ArrayList<>();
-    private List<Session> praSessions = new ArrayList<>();
-    private boolean isValidCourse = true;
+    private boolean validCourse = true;
 
     public Course(HashMap<String, HashMap<String, ArrayList<HashMap<String,Object>>>> courseInfo){
         courseName = courseInfo.keySet().iterator().next().toString();
@@ -26,11 +25,8 @@ public class Course {
             }else{
                 praSessions.add(session);
             }
-        }
-        if (lecSessions.isEmpty()) {isValidCourse=false;}
-        }
-
-
+        if (lecSessions.size()==0){validCourse=false;}
+    }
 
     public List<Session> getLecSessions(){
         return lecSessions;
@@ -52,8 +48,10 @@ public class Course {
     public String getCourseName() {
         return courseName;
     }
+    public boolean isValidCourse(){
+        return this.validCourse;
+    }
 
-    public boolean isValidCourse(){return this.isValidCourse;}
 //    Testing
 //    public static void main(String[] args) {
 //        entity.Course course = new entity.Course(CourseAPI.getCourse("CSC207H1 -F"));

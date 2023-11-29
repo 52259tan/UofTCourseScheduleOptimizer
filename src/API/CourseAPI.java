@@ -98,7 +98,7 @@ public class CourseAPI {
                 weekday.put("building", building);
                 sectionMeetingTimes.add(weekday);}
             }
-            lecTutSectionInfo.put(lecturecode, sectionMeetingTimes);
+            if (sectionMeetingTimes.size()!=0){lecTutSectionInfo.put(lecturecode, sectionMeetingTimes);}
         }
         retCourseInfo.put(code + " -" + term, lecTutSectionInfo);
         //System.out.println(retCourseInfo);

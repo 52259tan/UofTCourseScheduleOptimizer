@@ -73,15 +73,15 @@ public class Algorithm {
                 for (Integer day : ses.getDay()) { //sample days:[1,3] which 1 corresponds to [7,8,"location1"] and 3 corresponds to [9,10,"location2"]
                     Integer index = ses.getDay().indexOf(day);
                     if (day.equals(1)) {
-                        data1.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index))); //sample data in data1 [[7,8,"location1"]]
+                        data1.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index))); //sample data in data1 [[7,8,"location1"]]
                     } else if (day.equals(2)) {
-                        data2.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data2.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     } else if (day.equals(3)) {
-                        data3.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data3.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     } else if (day.equals(4)) {
-                        data4.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data4.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     } else if (day.equals(5)) {
-                        data5.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data5.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     }
                 }
             }
