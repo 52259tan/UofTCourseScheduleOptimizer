@@ -10,6 +10,7 @@ public class Course {
     private String courseName;
     private List<Session> lecSessions = new ArrayList<>();
     private List<Session> tutSessions = new ArrayList<>();
+    private List<Session> praSessions = new ArrayList<>();
     private boolean validCourse = true;
 
     public Course(HashMap<String, HashMap<String, ArrayList<HashMap<String,Object>>>> courseInfo){
@@ -26,7 +27,7 @@ public class Course {
                 praSessions.add(session);
             }
         if (lecSessions.size()==0){validCourse=false;}
-    }
+    }}
 
     public List<Session> getLecSessions(){
         return lecSessions;
