@@ -8,13 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /** Lowest-level interface for communicating with the Google Maps Distance Matrix API.
  * @author Joshua Jang
  */
-public class GoogleMapsAPI {
+public class DistanceMatrixAPI {
     private static String encodeLocations(List<String> locations) {
         StringBuilder formattedString = new StringBuilder();
 
@@ -35,11 +35,11 @@ public class GoogleMapsAPI {
      * @return A list containing all possible route combinations between each origin and destination.
      *         The sublist contains the distance string (in m or km) at index 0 and travel time (in mins or hours) at index 1.
      */
-    public static ArrayList<ArrayList<String>> get(List<String> origins, List<String> destinations, String mode) {
+    public static List<List<String>> get(List<String> origins, List<String> destinations, String mode) {
         final String API_URL =
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=%s&units=metric&key=%s";
 
-        ArrayList<ArrayList<String>> results = new ArrayList<>();
+        List<List<String>> results = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -49,7 +49,7 @@ public class GoogleMapsAPI {
         try {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
-            System.out.println(responseBody);
+            //System.out.println(responseBody);
 
             JSONArray rows = responseBody.getJSONArray("rows");
 
@@ -58,7 +58,7 @@ public class GoogleMapsAPI {
                 JSONArray elementsArray = elements.getJSONArray("elements");
 
                 for (int j = 0; j < elementsArray.length(); j++) {
-                    ArrayList<String> resultPair = new ArrayList<>();
+                    List<String> resultPair = new ArrayList<>();
                     JSONObject element = elementsArray.getJSONObject(j);
                     JSONObject distance = element.getJSONObject("distance");
                     String distanceValue = distance.getString("text");

@@ -126,13 +126,12 @@ public class TimeTable {
     }
 
     private List<String> getAddress(List<List<Object>> day) { //day: [[7,9,"location1"], [11, 12, "location2"], [14,16, "location3"]]
-        final String postfix = ", Toronto, Ontario, Canada";
         if (day.get(0).isEmpty()){
             return new ArrayList<>();
         }
         List<String> address = new ArrayList<>();
         for (List<Object> info : day) {
-            address.add(info.get(3) + postfix);
+            address.add(info.get(3).toString());
         }
         return address; //["address1", "address2", "address3"]
     }
