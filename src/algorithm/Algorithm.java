@@ -45,7 +45,13 @@ public class Algorithm {
         // [[5 lists of sessions for each courses]]
         // ...
         // ]
-        List<List<List<Session>>> allTimeTable = getAllTimeTable(courses);
+        List<Course> validCourse = new ArrayList<>();
+        for (Course course: courses){
+            if (course.isValidCourse()){
+                validCourse.add(course);
+            }
+        }
+        List<List<List<Session>>> allTimeTable = getAllTimeTable(validCourse);
         List<List<Session>> flattenTimeTable = new ArrayList<>();
         for (List<List<Session>> timeTable : allTimeTable) { //sample timeTable: [[sessions for course1], [sessions for course2],[sessions for course3],[sessions for course4], [sessions for course5]]//
             flattenTimeTable.add(flattenList(timeTable)); //sample element in flattenTimeTable: [sessions for course1, sessions for course2, etc...], [],[]
@@ -67,15 +73,15 @@ public class Algorithm {
                 for (Integer day : ses.getDay()) { //sample days:[1,3] which 1 corresponds to [7,8,"location1"] and 3 corresponds to [9,10,"location2"]
                     Integer index = ses.getDay().indexOf(day);
                     if (day.equals(1)) {
-                        data1.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index))); //sample data in data1 [[7,8,"location1"]]
+                        data1.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index))); //sample data in data1 [[7,8,"location1"]]
                     } else if (day.equals(2)) {
-                        data2.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data2.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     } else if (day.equals(3)) {
-                        data3.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data3.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     } else if (day.equals(4)) {
-                        data4.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data4.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     } else if (day.equals(5)) {
-                        data5.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index)));
+                        data5.add(List.of(ses.getStartTime().get(index), ses.getEndTime().get(index), ses.getBuildingCode().get(index), ses.getAddress().get(index)));
                     }
                 }
             }
@@ -121,11 +127,13 @@ public class Algorithm {
 
 
     public static Integer findMinIndex(List<Double> allDistances) {
-        if (allDistances.isEmpty()){
-            System.out.println("TimeTable Not Available");
-        }
         double minValue = allDistances.get(0);
         int minIndex = 0;
+
+        if (allDistances.isEmpty()){
+            System.out.println("TimeTable Not Available");
+            return -1;
+        }
 
         for (int i = 1; i < allDistances.size(); i++) {
             if (allDistances.get(i) < minValue) {
