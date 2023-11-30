@@ -5,6 +5,7 @@ import entity.Course;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /** Demo of creating two courses through the CourseAPI and displaying all distance info between their buildings.
  * @author Joshua Jang

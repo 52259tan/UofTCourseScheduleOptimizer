@@ -45,7 +45,13 @@ public class Algorithm {
         // [[5 lists of sessions for each courses]]
         // ...
         // ]
-        List<List<List<Session>>> allTimeTable = getAllTimeTable(courses);
+        List<Course> validCourse = new ArrayList<>();
+        for (Course course: courses){
+            if (course.isValidCourse()){
+                validCourse.add(course);
+            }
+        }
+        List<List<List<Session>>> allTimeTable = getAllTimeTable(validCourse);
         List<List<Session>> flattenTimeTable = new ArrayList<>();
         for (List<List<Session>> timeTable : allTimeTable) { //sample timeTable: [[sessions for course1], [sessions for course2],[sessions for course3],[sessions for course4], [sessions for course5]]//
             flattenTimeTable.add(flattenList(timeTable)); //sample element in flattenTimeTable: [sessions for course1, sessions for course2, etc...], [],[]
@@ -121,11 +127,13 @@ public class Algorithm {
 
 
     public static Integer findMinIndex(List<Double> allDistances) {
-        if (allDistances.isEmpty()){
-            System.out.println("TimeTable Not Available");
-        }
         double minValue = allDistances.get(0);
         int minIndex = 0;
+
+        if (allDistances.isEmpty()){
+            System.out.println("TimeTable Not Available");
+            return -1;
+        }
 
         for (int i = 1; i < allDistances.size(); i++) {
             if (allDistances.get(i) < minValue) {
