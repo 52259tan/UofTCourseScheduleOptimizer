@@ -1,5 +1,6 @@
 package MapRender;
 
+import API.GoogleMapRenderAPI;
 import API.MapRenderAPI;
 import entity.TimeTable;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
  */
 public class MapRenderManager {
     private static final List<String> days = new ArrayList<>(Arrays.asList("MON", "TUE", "WED", "THU", "FRI"));
+    private static final MapRenderAPI mapRenderAPI = new GoogleMapRenderAPI();
 
     /**
      * Generate 5 Map images with waypoint markers and path/route line(s), as a list of BufferedImages.
@@ -51,8 +53,8 @@ public class MapRenderManager {
 
     private static BufferedImage generateMapImage(List<String> addresses) {
         if (!addresses.isEmpty()) {
-            String polyline = MapRenderAPI.getPolyline(addresses, "walking");
-            BufferedImage image = MapRenderAPI.generateMapWithPolyline(polyline, addresses);
+            String polyline = mapRenderAPI.getPolyline(addresses, "walking");
+            BufferedImage image = mapRenderAPI.generateMapWithPolyline(polyline, addresses);
 
             return image;
         }
