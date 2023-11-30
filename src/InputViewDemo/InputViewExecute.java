@@ -2,9 +2,11 @@ package InputViewDemo;
 
 
 import API.CourseAPI;
+import MapRender.MapRenderManager;
 import TimetableDemo.TimetableExecute;
 import algorithm.Algorithm;
 import entity.Session;
+import entity.TimeTable;
 import gui.CourseController;
 import gui.CourseInputView;
 
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Course;
+import gui.TimetableView;
 import use_case.CourseInputData;
 
 public class InputViewExecute {
@@ -40,11 +43,13 @@ public class InputViewExecute {
                         courses.add(course);
                     }
                     List<Session> sessionList = new ArrayList<>();
-                    //sessionList = Algorithm.getOptimalChoice(courses).getSessions();
-                    for (Course course: courses){
-                        if (course.getLecSessions().size()!=0){
-                        sessionList.add(course.getLecSessions().get(0));
-                    }}
+                    TimeTable timeTable = Algorithm.getOptimalChoice(courses);
+                    MapRenderManager.generateMapsPNG(timeTable,"mapimgs");
+                    sessionList = timeTable.getSessions();
+//                    for (Course course: courses){
+//                        if (course.getLecSessions().size()!=0){
+//                        sessionList.add(course.getLecSessions().get(0));
+//                    }}
                     TimetableExecute.TimetableExecute(sessionList);
 
                     CourseInputData inputData = new CourseInputData(courses);

@@ -123,12 +123,14 @@ public class AutoSuggest extends JPanel{
     }
 
     private JPanel createCoursesButton() {
-        JButton addButton = createButton("Add Another Course", this::addButtonClicked);
+        //JButton addButton = createButton("Confirm", this::addButtonClicked);
+        JButton addAnotherButton = createButton("Add Another Course", this::addButtonClicked);
         JButton submitButton = createButton("Submit", this::submitButtonClicked);
 
         JPanel buttonPanel = new JPanel(new GridLayout(1,2));
         buttonPanel.setBackground(Color.WHITE);
-        buttonPanel.add(addButton);
+        //buttonPanel.add(addButton);
+        buttonPanel.add(addAnotherButton);
         buttonPanel.add(submitButton);
 
         return buttonPanel;
@@ -157,22 +159,91 @@ public class AutoSuggest extends JPanel{
         return mapsPanel;
     }
 
-    private void map1Clicked(ActionEvent a){
+    private void map1Clicked(ActionEvent a) {
+        // Step 1: Load the image
+        ImageIcon imageIcon = new ImageIcon("mapimgs/map_MON.png"); // Provide the path to your image file
 
+        // Step 2: Set the image to a JLabel
+        JLabel label = new JLabel();
+        label.setIcon(imageIcon);
+
+        // Step 3: Create and display a custom dialog
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Monday");
+        dialog.add(label);
+        dialog.pack(); // Adjusts the dialog size
+        dialog.setLocationRelativeTo(null); // Center the dialog on screen
+        dialog.setVisible(true);
     }
+
     private void map2Clicked(ActionEvent u){
+        // Step 1: Load the image
+        ImageIcon imageIcon = new ImageIcon("mapimgs/map_TUE.png"); // Provide the path to your image file
+
+        // Step 2: Set the image to a JLabel
+        JLabel label = new JLabel();
+        label.setIcon(imageIcon);
+
+        // Step 3: Create and display a custom dialog
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Tuesday");
+        dialog.add(label);
+        dialog.pack(); // Adjusts the dialog size
+        dialog.setLocationRelativeTo(null); // Center the dialog on screen
+        dialog.setVisible(true);
 
     }
     private void map3Clicked(ActionEvent r){
+        // Step 1: Load the image
+        ImageIcon imageIcon = new ImageIcon("mapimgs/map_WED.png"); // Provide the path to your image file
+
+        // Step 2: Set the image to a JLabel
+        JLabel label = new JLabel();
+        label.setIcon(imageIcon);
+
+        // Step 3: Create and display a custom dialog
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Wednesday");
+        dialog.add(label);
+        dialog.pack(); // Adjusts the dialog size
+        dialog.setLocationRelativeTo(null); // Center the dialog on screen
+        dialog.setVisible(true);
 
     }
     private void map4Clicked(ActionEvent o){
+        // Step 1: Load the image
+        ImageIcon imageIcon = new ImageIcon("mapimgs/map_THU.png"); // Provide the path to your image file
+
+        // Step 2: Set the image to a JLabel
+        JLabel label = new JLabel();
+        label.setIcon(imageIcon);
+
+        // Step 3: Create and display a custom dialog
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Thursday");
+        dialog.add(label);
+        dialog.pack(); // Adjusts the dialog size
+        dialog.setLocationRelativeTo(null); // Center the dialog on screen
+        dialog.setVisible(true);
 
     }
     private void map5Clicked(ActionEvent r){
+        // Step 1: Load the image
+        ImageIcon imageIcon = new ImageIcon("mapimgs/map_FRI.png"); // Provide the path to your image file
+
+        // Step 2: Set the image to a JLabel
+        JLabel label = new JLabel();
+        label.setIcon(imageIcon);
+
+        // Step 3: Create and display a custom dialog
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Friday");
+        dialog.add(label);
+        dialog.pack(); // Adjusts the dialog size
+        dialog.setLocationRelativeTo(null); // Center the dialog on screen
+        dialog.setVisible(true);
 
     }
-
     private void addButtonClicked(ActionEvent e){
         addCourseField();
     }
@@ -206,12 +277,12 @@ public class AutoSuggest extends JPanel{
                 ErrorView.ErrorViewTermCodeMismatch();
             }
             else{
-                JButton sourceButton = (JButton) e.getSource(); // Get the button that was clicked
-                //sourceButton.setBackground(Color.GREEN);
-                //sourceButton.setForeground(Color.WHITE);
-                sourceButton.setOpaque(true);
-                sourceButton.setBorderPainted(false);
-                sourceButton.setContentAreaFilled(true);
+//                JButton sourceButton = (JButton) e.getSource(); // Get the button that was clicked
+//                //sourceButton.setBackground(Color.GREEN);
+//                //sourceButton.setForeground(Color.WHITE);
+//                sourceButton.setOpaque(true);
+//                sourceButton.setBorderPainted(false);
+//                sourceButton.setContentAreaFilled(true);
 
                 List<String> courses = new ArrayList<>();
                 for (JTextField courseField : courseFields) {
