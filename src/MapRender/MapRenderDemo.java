@@ -32,7 +32,4 @@ public class MapRenderDemo {
 
         MapRenderManager.generateMapsPNG(timeTable, "mapimgs");
     }
-
-
-
 }

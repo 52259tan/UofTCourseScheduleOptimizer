@@ -51,6 +51,10 @@ public class Algorithm {
                 validCourse.add(course);
             }
         }
+
+        //update courses
+        DistanceManager.updateDistances(validCourse);
+
         List<List<List<Session>>> allTimeTable = getAllTimeTable(validCourse);
         List<List<Session>> flattenTimeTable = new ArrayList<>();
         for (List<List<Session>> timeTable : allTimeTable) { //sample timeTable: [[sessions for course1], [sessions for course2],[sessions for course3],[sessions for course4], [sessions for course5]]//
@@ -112,9 +116,6 @@ public class Algorithm {
                 data5.sort(Comparator.comparingInt(sublist -> (int) sublist.get(0)));
             }
 
-
-            //update courses
-            DistanceManager.updateDistances(courses);
             // add the total distances of one timeTable, the index of allDistance and flattenTimeTable should represent the same timeTable
             allDistances.add(getDistance(data1) + getDistance(data2) + getDistance(data3) + getDistance(data4) + getDistance(data5));
         }
