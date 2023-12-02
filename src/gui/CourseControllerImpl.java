@@ -22,17 +22,18 @@ public class CourseControllerImpl implements CourseController {
          * @param courseCodes list of course codes inputted by the user
          * @return a list of Course entities
          */
-        System.out.println("Controller reached");
+        // Print the submitted course codes
+        System.out.println("Submitted courses: " + courseCodes);
+
         List<Course> courses = new ArrayList<>();
         for (String code : courseCodes) {
-            // Use the CourseAPI to create a new Course entity
+            // Replace with actual Course creation logic or a mock version
             Course course = new Course(CourseAPI.getCourse(code));
+            System.out.println("Processing: " + course.getCourseName());
             courses.add(course);
+        }
 
-        // Create an input data object with a list of Course entities
         CourseInputData inputData = new CourseInputData(courses);
-
-        // Pass the input data to the use case/interactor
         courseInteractor.execute(inputData);
     }
-} }
+    }

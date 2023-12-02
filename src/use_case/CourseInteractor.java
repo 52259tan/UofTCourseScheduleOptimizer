@@ -1,10 +1,25 @@
 package use_case;
 
-import static algorithm.Algorithm.getOptimalChoice;
+import TimetableDemo.TimetableExecute;
+import entity.Course;
+import entity.Session;
+
+import java.util.ArrayList;
+import java.util.List;
+import algorithm.Algorithm;
+
 
 public class CourseInteractor implements CourseInputBoundary {
+    private TimetableOutputBoundary outputBoundary;
+    public CourseInteractor(TimetableOutputBoundary outputBoundary) {
+        this.outputBoundary = outputBoundary;
+    }
     @Override
     public void execute(CourseInputData inputData) {
-        getOptimalChoice(inputData.getCourse());
+        System.out.println("reach interactor");
+        List<Course> courses = inputData.getCourse();
+//        List<Session> sessionList = new ArrayList<>();
+        List<Session> sessionList = Algorithm.getOptimalChoice(courses).getSessions();
+        TimetableExecute.TimetableExecute(sessionList);
     }
 }

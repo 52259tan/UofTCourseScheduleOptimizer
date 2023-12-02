@@ -1,11 +1,9 @@
 package InputViewDemo;
 import API.CourseAPI;
+import TimetableDemo.MockTimetableOptimizerInteractor;
 import TimetableDemo.TimetableExecute;
-import algorithm.Algorithm;
 import entity.Session;
-import gui.CourseController;
-import gui.CourseControllerImpl;
-import gui.CourseInputView;
+import gui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,27 +14,31 @@ import entity.Course;
 import use_case.CourseInputBoundary;
 import use_case.CourseInputData;
 import use_case.CourseInteractor;
+import use_case.TimetableOutputBoundary;
 
 
 public class InputViewExecuteTest {
-    SwingUtilities.invokeLater(() -> {
-        CourseInputBoundary courseInputBoundary = new CourseInteractor();
-        CourseInputBoundary courseInteractor = // ... create or obtain an instance
+    public static void InputViewExecuteTest() {
+        SwingUtilities.invokeLater(() -> {
+            TimetableViewModel timetableViewModel = new TimetableViewModel();
+            TimetableOutputBoundary timetableOutputBoundary = new TimetablePresenter(timetableViewModel);
+            CourseInputBoundary courseInteractor = new CourseInteractor(timetableOutputBoundary);
 
-                CourseController realController = new CourseControllerImpl(courseInteractor);
+            CourseController realController = new CourseControllerImpl(courseInteractor);
 
-        JFrame frame = new JFrame("Course Input Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JFrame frame = new JFrame("Course Input Test");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        AutoSuggest autoSuggest;
-        try {
-            autoSuggest = new AutoSuggest(realController);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        frame.getContentPane().add(autoSuggest);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    });
+            AutoSuggest autoSuggest;
+            try {
+                autoSuggest = new AutoSuggest(realController);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            frame.getContentPane().add(autoSuggest);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
 }
