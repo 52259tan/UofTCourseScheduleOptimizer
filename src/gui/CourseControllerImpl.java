@@ -22,6 +22,7 @@ public class CourseControllerImpl implements CourseController {
          * @param courseCodes list of course codes inputted by the user
          * @return a list of Course entities
          */
+        System.out.println("Controller reached");
         List<Course> courses = new ArrayList<>();
         for (String code : courseCodes) {
             // Use the CourseAPI to create a new Course entity
