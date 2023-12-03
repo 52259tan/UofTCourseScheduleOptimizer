@@ -1,3 +1,5 @@
+package algorithm;
+
 import algorithm.DayOverlapChecker;
 import org.junit.Before;
 import org.junit.Test;
