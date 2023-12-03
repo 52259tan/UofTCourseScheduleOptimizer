@@ -13,7 +13,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             CourseController realController = Factory.createCourseController();
 
-            JFrame frame = new JFrame("Course Input Test");
+            JFrame frame = new JFrame("Course Input");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             CourseInputView courseInputView;
@@ -27,7 +27,7 @@ public class Main {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             // output view
-            JFrame frame2 = new JFrame("Timetable Test");
+            JFrame frame2 = new JFrame("Timetable");
             frame2.add(timetableview);
             frame2.pack();
             frame2.setVisible(true);
