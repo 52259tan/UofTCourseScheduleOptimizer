@@ -1,6 +1,8 @@
-package Distance;
+package DistanceDemo;
 
 import API.CourseAPI;
+import Distance.DistanceData;
+import Distance.DistanceManager;
 import entity.Course;
 
 import java.util.List;

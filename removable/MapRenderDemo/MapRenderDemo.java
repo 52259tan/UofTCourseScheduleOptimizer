@@ -1,6 +1,7 @@
-package MapRender;
+package MapRenderDemo;
 
 import API.CourseAPI;
+import MapRender.MapRenderManager;
 import entity.Course;
 import entity.TimeTable;
 
