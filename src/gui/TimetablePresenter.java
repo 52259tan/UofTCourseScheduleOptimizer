@@ -1,5 +1,6 @@
 package gui;
 
+import data_access.SessionDTO;
 import entity.Session;
 import use_case.TimeTableOutputData;
 import use_case.TimetableOutputBoundary;
@@ -18,7 +19,7 @@ public class TimetablePresenter implements TimetableOutputBoundary {
 
     @Override
     public void presentTimetableOptimizationResults(TimeTableOutputData outputData) {
-        List<Session> sessions = outputData.getSessions();
+        List<SessionDTO> sessions = outputData.getSessions();
 
         timetableViewModel.setSessions(sessions);
     }

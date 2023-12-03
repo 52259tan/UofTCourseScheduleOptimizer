@@ -2,6 +2,8 @@ package use_case;
 
 import API.CourseAPI;
 import MapRender.MapRenderManager;
+import java.util.stream.Collectors;
+import data_access.SessionDTO;
 import entity.Course;
 import entity.Session;
 
@@ -35,8 +37,19 @@ public class CourseInteractor implements CourseInputBoundary {
         System.out.println(sessionList);
         // Generate map images
         MapRenderManager.generateMapsPNG(timeTable,"mapimgs");
+        // Mapping Session to SessionDTO
+        List<SessionDTO> sessionDTOs = sessionList.stream()
+                .map(session -> new SessionDTO(
+                        session.getSessionCode(),
+                        session.getStartTime(),
+                        session.getEndTime(),
+                        session.getDay(),
+                        session.getAddress(),
+                        session.getBuildingCode()
+                ))
+                .collect(Collectors.toList());
 
-        TimeTableOutputData timeTableOutputData = new TimeTableOutputData(sessionList);
+        TimeTableOutputData timeTableOutputData = new TimeTableOutputData(sessionDTOs);
         outputBoundary.presentTimetableOptimizationResults(timeTableOutputData);
     }
 }
