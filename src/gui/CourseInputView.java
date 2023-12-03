@@ -9,6 +9,9 @@ import java.util.List;
 import javax.swing.*;
 
 public class CourseInputView extends JPanel{
+    /**
+     * This is course input view
+     */
     private final JTextField tf;
     private final JComboBox combo = new JComboBox();
     private final Vector<String> v = new Vector<String>();
@@ -124,7 +127,6 @@ public class CourseInputView extends JPanel{
 
         JPanel buttonPanel = new JPanel(new GridLayout(1,2));
         buttonPanel.setBackground(Color.WHITE);
-        //buttonPanel.add(addButton);
         buttonPanel.add(addAnotherButton);
         buttonPanel.add(submitButton);
 

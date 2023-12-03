@@ -6,6 +6,9 @@ import use_case.CourseInteractor;
 import use_case.TimetableOutputBoundary;
 
 public class Factory {
+    /**
+     * This factory creates a controller that is required to start the Input View in Main
+     */
     public static TimetableView timetableview;
     public static CourseController createCourseController() {
         TimetableViewModel timetableViewModel = new TimetableViewModel();
