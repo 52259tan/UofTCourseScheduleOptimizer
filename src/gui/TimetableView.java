@@ -241,16 +241,10 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void updateTotalDistanceDisplay(double totalDistance) {
-        totalDistanceLabel.setText("Total Distance: " + totalDistance + " km");
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("sessions".equals(evt.getPropertyName())) {
             updateTimetableDisplay((List<Session>) evt.getNewValue());
-        } else if ("totalDistance".equals(evt.getPropertyName())) {
-            updateTotalDistanceDisplay((Double) evt.getNewValue());
         }
     }
 }

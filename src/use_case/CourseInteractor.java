@@ -1,12 +1,13 @@
 package use_case;
 
-import TimetableDemo.TimetableExecute;
+import MapRender.MapRenderManager;
 import entity.Course;
 import entity.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 import algorithm.Algorithm;
+import entity.TimeTable;
 
 
 public class CourseInteractor implements CourseInputBoundary {
@@ -18,8 +19,14 @@ public class CourseInteractor implements CourseInputBoundary {
     public void execute(CourseInputData inputData) {
         System.out.println("reach interactor");
         List<Course> courses = inputData.getCourse();
-//        List<Session> sessionList = new ArrayList<>();
-        List<Session> sessionList = Algorithm.getOptimalChoice(courses).getSessions();
-        TimetableExecute.TimetableExecute(sessionList);
+        TimeTable timeTable = Algorithm.getOptimalChoice(courses);
+        List<Session> sessionList = timeTable.getSessions();
+        //List<Session> sessionList = Algorithm.getOptimalChoice(courses).getSessions();
+        //TimeTable timeTable = Algorithm.getOptimalChoice(courses);
+        MapRenderManager.generateMapsPNG(timeTable,"mapimgs");
+
+
+        TimeTableOutputData timeTableOutputData = new TimeTableOutputData(sessionList);
+        outputBoundary.presentTimetableOptimizationResults(timeTableOutputData);
     }
 }

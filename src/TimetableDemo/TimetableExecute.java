@@ -1,12 +1,14 @@
 package TimetableDemo;
 import entity.Session;
 import gui.*;
+import use_case.TimeTableOutputData;
 
 import javax.swing.*;
 import java.util.List;
 
 public class TimetableExecute {
-    public static void TimetableExecute(List<Session> sessions) {
+    public static void TimetableExecute(TimeTableOutputData outputData) {
+        List<Session> sessions = outputData.getSessions();
         SwingUtilities.invokeLater(() -> {
             TimetableViewModel viewModel = new TimetableViewModel();
             TimetablePresenter presenter = new TimetablePresenter(viewModel);

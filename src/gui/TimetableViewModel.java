@@ -9,7 +9,6 @@ import java.util.List;
 public class TimetableViewModel {
     private final PropertyChangeSupport support;
     private List<Session> sessions;
-    private double totalDistance;
 
     public TimetableViewModel() {
         support = new PropertyChangeSupport(this);
@@ -23,16 +22,6 @@ public class TimetableViewModel {
         List<Session> oldSessions = this.sessions;
         this.sessions = sessions;
         support.firePropertyChange("sessions", oldSessions, sessions);
-    }
-
-    public double getTotalDistance() {
-        return totalDistance;
-    }
-
-    public void setTotalDistance(double totalDistance) {
-        double oldDistance = this.totalDistance;
-        this.totalDistance = totalDistance;
-        support.firePropertyChange("totalDistance", oldDistance, totalDistance);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

@@ -1,30 +1,16 @@
 package InputViewDemo;
-import API.CourseAPI;
-import TimetableDemo.MockTimetableOptimizerInteractor;
-import TimetableDemo.TimetableExecute;
-import entity.Session;
+import app.Factory;
 import gui.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import entity.Course;
-import use_case.CourseInputBoundary;
-import use_case.CourseInputData;
-import use_case.CourseInteractor;
-import use_case.TimetableOutputBoundary;
 
+import static app.Factory.timetableview;
 
 public class InputViewExecuteTest {
     public static void InputViewExecuteTest() {
         SwingUtilities.invokeLater(() -> {
-            TimetableViewModel timetableViewModel = new TimetableViewModel();
-            TimetableOutputBoundary timetableOutputBoundary = new TimetablePresenter(timetableViewModel);
-            CourseInputBoundary courseInteractor = new CourseInteractor(timetableOutputBoundary);
-
-            CourseController realController = new CourseControllerImpl(courseInteractor);
+            CourseController realController = Factory.createCourseController();
 
             JFrame frame = new JFrame("Course Input Test");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,6 +25,11 @@ public class InputViewExecuteTest {
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
+            // output view
+            JFrame frame2 = new JFrame("Timetable Test");
+            frame2.add(timetableview);
+            frame2.pack();
+            frame2.setVisible(true);
         });
     }
 }

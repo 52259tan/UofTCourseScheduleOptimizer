@@ -15,10 +15,8 @@ public class TimetablePresenter implements TimetableOutputBoundary {
 
     @Override
     public void presentTimetableOptimizationResults(TimeTableOutputData outputData) {
-        List<Session> sessions = outputData.getSessions(); // Changed from getCourses to getSessions
-        double totalDistance = outputData.getTotalDistance();
+        List<Session> sessions = outputData.getSessions();
 
-        timetableViewModel.setSessions(sessions); // Changed from setCourses to setSessions
-        timetableViewModel.setTotalDistance(totalDistance);
+        timetableViewModel.setSessions(sessions);
     }
 }

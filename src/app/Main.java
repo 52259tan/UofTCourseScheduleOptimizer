@@ -1,3 +1,5 @@
+package app;
+
 import InputViewDemo.InputViewExecuteTest;
 import TimetableDemo.MockListSession;
 import algorithm.Algorithm;
