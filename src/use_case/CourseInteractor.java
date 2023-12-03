@@ -21,10 +21,9 @@ public class CourseInteractor implements CourseInputBoundary {
         List<Course> courses = inputData.getCourse();
         TimeTable timeTable = Algorithm.getOptimalChoice(courses);
         List<Session> sessionList = timeTable.getSessions();
-        //List<Session> sessionList = Algorithm.getOptimalChoice(courses).getSessions();
-        //TimeTable timeTable = Algorithm.getOptimalChoice(courses);
+        System.out.println(sessionList);
+        // Generate map images
         MapRenderManager.generateMapsPNG(timeTable,"mapimgs");
-
 
         TimeTableOutputData timeTableOutputData = new TimeTableOutputData(sessionList);
         outputBoundary.presentTimetableOptimizationResults(timeTableOutputData);
