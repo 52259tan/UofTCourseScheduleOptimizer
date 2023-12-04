@@ -1,9 +1,6 @@
 package gui;
 
-import entity.Course;
-import java.util.ArrayList;
 import java.util.List;
-import API.CourseAPI; // Assume this is the package where CourseAPI is located
 import use_case.CourseInputData;
 import use_case.CourseInputBoundary;
 
@@ -16,22 +13,16 @@ public class CourseControllerImpl implements CourseController {
     }
 
     @Override
-    public void execute(List<String> courseCodes) {
+    public void execute(List<String> courseCodes, boolean algo2) {
         /**
          * This method (invoked by the View) invokes the Interactor with an Input Data object
          * @param courseCodes list of course codes inputted by the user
          * @return a list of Course entities
          */
-        List<Course> courses = new ArrayList<>();
-        for (String code : courseCodes) {
-            // Use the CourseAPI to create a new Course entity
-            Course course = new Course(CourseAPI.getCourse(code));
-            courses.add(course);
+        // Print the submitted course codes
+        System.out.println("Submitted courses: " + courseCodes);
 
-        // Create an input data object with a list of Course entities
-        CourseInputData inputData = new CourseInputData(courses);
-
-        // Pass the input data to the use case/interactor
+        CourseInputData inputData = new CourseInputData(courseCodes, algo2);
         courseInteractor.execute(inputData);
     }
-} }
+    }

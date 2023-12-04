@@ -14,17 +14,15 @@ import java.util.List;
  */
 public class DistanceDemo {
     public static void main(String[] args) {
-        List<Course> courses = new ArrayList<>();
-
-        Course csc207 = new Course(CourseAPI.getCourse("CSC207H1 -F"));
-        Course cog250 = new Course(CourseAPI.getCourse("MAT235Y1 -Y"));
-
-        courses.add(csc207);
-        courses.add(cog250);
-
-        // Generate cache of all possible distance combinations. MUST DO prior to using getDistanceFloat.
-        DistanceManager.updateDistances(courses);
-        DistanceData distanceData = DistanceManager.getDistanceData("BA", "FE");
-        System.out.println(distanceData.getDistanceFloat());
+//        List<Course> courses = new ArrayList<>();
+//
+//        Course csc207 = new Course(CourseAPI.getCourse("CSC207H1 -F"));
+//        Course cog250 = new Course(CourseAPI.getCourse("MAT235Y1 -Y"));
+//        courses.add(csc207);
+//        courses.add(cog250);
+//        // Generate cache of all possible distance combinations. MUST DO prior to using getDistanceFloat.
+//        DistanceManager.updateDistances(courses);
+//        DistanceData distanceData = DistanceManager.getDistanceData("BA", "FE");
+//        System.out.println(distanceData.getDistanceFloat());
     }
 }
