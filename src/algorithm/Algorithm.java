@@ -128,13 +128,14 @@ public class Algorithm {
 
 
     public static Integer findMinIndex(List<Double> allDistances) {
-        double minValue = allDistances.get(0);
-        int minIndex = 0;
 
         if (allDistances.isEmpty()){
             System.out.println("TimeTable Not Available");
             return -1;
         }
+
+        double minValue = allDistances.get(0);
+        int minIndex = 0;
 
         for (int i = 1; i < allDistances.size(); i++) {
             if (allDistances.get(i) < minValue) {
