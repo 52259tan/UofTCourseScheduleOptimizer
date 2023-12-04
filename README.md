@@ -1,55 +1,83 @@
-# UofTCourseScheduleOptimizer
-Optimizing student's schedule by suggesting a course schedule and path that is the most efficient.
+[![GitHub](https://img.shields.io/github/license/52259tan/UofTCourseScheduleOptimizer)](./LICENSE)
+[![JDK](https://img.shields.io/badge/JDK-20-red)](https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html)
 
-## Description of Problem Domain
-Every student knows the struggle of piecing together a class schedule that doesn't have them sprinting from one end of campus to the other in 10 minutes. The juggle of ensuring classes aren't overlapping, and the hunt for the optimal path between buildings is real. The key challenge here is to integrate course selection with efficient campus navigation for a seamless scheduling experience.
+# Distance-Based Timetable Organiser
+*Generate University of Toronto timetables with minimal distances between buildings*
 
-## High-level Description
+For the project *Blueprint*, see [BLUEPRINT.md](BLUEPRINT.md)
+
+<p align="center">
+	<img width=100% src="imgs/mainlogo.png">
+</p>
+
+
+## Core Features
 Our application aims to redefine academic scheduling by incorporating intelligent campus navigation. Here's how we envision it:
-Input Courses: Students will input their tentative courses for the semester.
-Timetable Generation: The app will then whip up the most efficient timetable, ensuring no overlaps and optimizing for the shortest travel distances between classes.
-Campus Map Integration: To make it even more intuitive, our app will also include a visual map, highlighting the route for each day based on the student's schedule. Think of it as a Google Maps tailored for academic scheduling.
+- Input Courses: Students input their tentative courses for the semester.
+- Timetable Generation: The app will then whip up the most efficient timetable, ensuring no overlaps and optimizing for the shortest travel distances between classes.
+- Campus Map Integration: To make it even more intuitive, our app also includes visual maps, highlighting the route for each day based on the student's schedule.
 
-## Google Maps API Documentation
-We will be using the Google Maps Distance Matrix API for determining the distance as well as travel time between two point on campus. The distance retrieved from the API call is not a simple straight line on Google Maps but an actual, physical route determined by a user-chosen mode of transport (walking, biking, transit). The Distance Matrix API also allows the querying of multiple origin/destination pairs in a single API call, which makes it ideal for our purpose.
+## Additional Features
+- Input any number of courses, from 1 to 5.
+- Autocomplete course codes.
+- Detect invalid course codes and show an error message.
+- Fully dynamic windows with resizing.
 
-Official overview/documentation: https://developers.google.com/maps/documentation/distance-matrix/
-
-## Google Maps API Test Screenshot
-Hoppscotch test using Bahen Centre as origin and Bloor-Yonge Subway Station as destination:
+## Dev Features for Geeks
+- Project is structured using the Clean Architecture engine:
 <p align="center">
-	<img width=80% src="imgs/image5.png">
+	<img width=80% src="imgs/cadiagram.png">
 </p>
 
-Screenshot from Google Maps directly:
+- The UofT Course API, Map Render API, and Algorithm are all designed with expandability in mind. To use a new variation of the above, simply implement their corresponding interface(s).
+- Javadoc is provided for most, if not all public classes and methods.
+
+## Installation
+There are no compiled binaries available at the moment.
+To compile from source:
+- Have Java Development Kit 20 or higher
+- Install and run the UofT Course API, details under [API Utilisation](#api-utilisation)
+- Set up a Google Cloud project and enable 3 APIs:
+  - Distance Matrix API
+  - Directions API
+  - Maps Static API
+- Use any modern IDE, or compile directly
+
+## Usage
 <p align="center">
-	<img width=80% src="imgs/image4.png">
+	<img width=100% src="imgs/maindemosc.png">
 </p>
 
-## Google Maps API Java Code Example + Result
-<p align="center">
-	<img width=80% src="imgs/image7.png">
-</p>
+Upper-right window:
+- Use the search bar to search for courses.
+- Once a desired course is selected, click "Add Another Course". The added course will appear on the list on the right.
+- Add up to 5 courses.
+- Once all courses are added, click "Submit". The program will load and compute a schedule for a couple of seconds.
 
-Result:
-<p align="center">
-	<img width=80% src="imgs/image2.png">
-</p>
+Upper-left window:
+- This is the timetable window, where added and optimised courses appear.
+- This window is resizable and scrollable.
+- Courses will be updated automatically whenever a new "submit" request is made.
 
-## UofT entity.Course API Documentation
-There are no public UofT course APIs so no documentation. However we could still access course information using API-like java codes requesting to https://ttb.utoronto.ca/.
+Lower window(s):
+- By clicking on any of the five "Map" buttons on the upper-right window, a visual map of a single day's schedule can be viewed.
+- Waypoint markers and route lines will be automatically placed.
 
-## UofT entity.Course API Test Screenshot
-Using Insomnia REST, we have:
-<p align="center">
-	<img width=80% src="imgs/image1.png">
-</p>
+## API Utilisation
+- Custom UofT course information API with data sourced from the UofT [Timetable Builder](https://ttb.utoronto.ca). Repository and setup instructions: [LINK HERE]
+- [Google Distance Matrix API](https://console.cloud.google.com/marketplace/product/google/distance-matrix-backend.googleapis.com) for distance calculation.
+- [Google Directions API](https://console.cloud.google.com/marketplace/product/google/directions-backend.googleapis.com) for route polyline retrieval.
+- [Google Maps Static API](https://console.cloud.google.com/marketplace/product/google/static-maps-backend.googleapis.com) for map PNG rendering.
 
-Indeed, the java code responsible for these outputs are:
-<p align="center">
-	<img width=80% src="imgs/image3.png">
-    <img width=80% src="imgs/image6.png">
-</p>
+## Contributors
+In alphabetical order:
+- Aurora Lu ([GitHub](https://github.com/pingluuu))
+- Bayan Mehr ([GitHub](https://github.com/bayanmehr))
+- Jacky Tan ([GitHub](https://github.com/52259tan))
+- Joshua Jang ([GitHub](https://github.com/musicofmusix))
+- Percy Phan ([GitHub](https://github.com/percy-ai))
 
-## Technical Problems
-- Algorithm for optimization
+"We love cats" - Percy Phan
+
+## Licensing
+This project is licensed under the MIT license. Please feel free to use, modify, or simply take the concept and create derivative work.
