@@ -1,8 +1,14 @@
 package use_case;
 
 import API.CourseAPI;
+import API.CourseAPIContext;
+import API.UofTCoursesAPI;
 import MapRender.MapRenderManager;
 import java.util.stream.Collectors;
+
+import algorithm.Algorithm1;
+import algorithm.Algorithm2;
+import algorithm.AlgorithmContext;
 import data_access.SessionDTO;
 import entity.Course;
 import entity.Session;
@@ -18,21 +24,31 @@ public class CourseInteractor implements CourseInputBoundary {
      * This class creates Session and Class entities, then invoke the Algorithm to find optimal output for the sessions
      */
     private TimetableOutputBoundary outputBoundary;
+    private AlgorithmContext algorithmContext = new AlgorithmContext();
+    private CourseAPIContext courseAPIContext = new CourseAPIContext();
     public CourseInteractor(TimetableOutputBoundary outputBoundary) {
         this.outputBoundary = outputBoundary;
     }
     @Override
     public void execute(CourseInputData inputData) {
+        boolean algo2 = inputData.isAlgo2();
+        if (algo2){
+            algorithmContext.setAlgorithm(new Algorithm2());}
+        else{algorithmContext.setAlgorithm(new Algorithm1());}
         List<String> courseCodes  = inputData.getCourse();
         List<Course> courses = new ArrayList<>();
         System.out.println("reach interactor");
+        courseAPIContext.setCourseAPI(new UofTCoursesAPI());
         for (String code : courseCodes) {
             // Replace with actual Course creation logic or a mock version
-            Course course = new Course(CourseAPI.getCourse(code));
-            System.out.println("Processing: " + course.getCourseName());
-            courses.add(course);
+            try{
+                Course course = new Course(courseAPIContext.courseAPIExecute(code));
+                System.out.println("Processing: " + course.getCourseName());
+                courses.add(course);}
+            catch(Exception ex){}
         }
-        TimeTable timeTable = Algorithm.getOptimalChoice(courses);
+
+        TimeTable timeTable = algorithmContext.executeAlgorithm(courses);
         List<Session> sessionList = timeTable.getSessions();
         System.out.println(sessionList);
         // Generate map images

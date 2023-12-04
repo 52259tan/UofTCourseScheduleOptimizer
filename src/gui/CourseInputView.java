@@ -19,6 +19,7 @@ public class CourseInputView extends JPanel{
     private List<JTextField> courseFields = new ArrayList<>();
     private final JPanel coursePanel;
     private final String[] allCourses;
+    private boolean algo2 = false;
 
     JButton map1;
     JButton map2;
@@ -89,13 +90,14 @@ public class CourseInputView extends JPanel{
         });
 
         setModel(new DefaultComboBoxModel(v), "");
-        JPanel leftPanel = new JPanel(new GridLayout(3,1));
+        JPanel leftPanel = new JPanel(new GridLayout(4,1));
         leftPanel.setBorder(BorderFactory.createTitledBorder("Input yo courses here"));
         leftPanel.add(combo, BorderLayout.NORTH);
 
         leftPanel.add(createCoursesButton());
 
         leftPanel.add(createMapsButton());
+        leftPanel.add(createCheckBox());
 
 
         coursePanel = new JPanel();
@@ -155,7 +157,20 @@ public class CourseInputView extends JPanel{
 
         return mapsPanel;
     }
-
+    private JPanel createCheckBox(){
+        JPanel checkBoxPanel = new JPanel(new BorderLayout());
+        JCheckBox checkBox = new JCheckBox("No Class after 8");
+        checkBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox.isSelected()){
+                    algo2 = true;
+                }else{algo2 = false;}
+            }
+        });
+        checkBoxPanel.add(checkBox);
+        return checkBoxPanel;
+    }
     private void map1Clicked(ActionEvent a) {
         // Step 1: Load the image
         ImageIcon imageIcon = new ImageIcon("mapimgs/map_MON.png");
@@ -281,7 +296,7 @@ public class CourseInputView extends JPanel{
                         courses.add(courseCode);
                     }
                 }
-                controller.execute(courses);
+                controller.execute(courses, algo2);
                 map1.setEnabled(true);
                 map2.setEnabled(true);
                 map3.setEnabled(true);

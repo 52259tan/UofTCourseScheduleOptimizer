@@ -13,7 +13,7 @@ public class CourseControllerImpl implements CourseController {
     }
 
     @Override
-    public void execute(List<String> courseCodes) {
+    public void execute(List<String> courseCodes, boolean algo2) {
         /**
          * This method (invoked by the View) invokes the Interactor with an Input Data object
          * @param courseCodes list of course codes inputted by the user
@@ -22,7 +22,7 @@ public class CourseControllerImpl implements CourseController {
         // Print the submitted course codes
         System.out.println("Submitted courses: " + courseCodes);
 
-        CourseInputData inputData = new CourseInputData(courseCodes);
+        CourseInputData inputData = new CourseInputData(courseCodes, algo2);
         courseInteractor.execute(inputData);
     }
     }
