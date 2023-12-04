@@ -1,5 +1,6 @@
 package gui;
 
+import data_access.SessionDTO;
 import entity.Session;
 
 import javax.swing.*;
@@ -109,7 +110,7 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
     }
 
     // This method sets up the slots and fill in the data
-    private void updateTimetableDisplay(List<Session> sessions) {
+    private void updateTimetableDisplay(List<SessionDTO> sessions) {
         // Define the start and end times of your schedule
         LocalTime scheduleStart = LocalTime.of(8, 0); // Example: 8 AM
         LocalTime scheduleEnd = LocalTime.of(21, 0); // Example: 8 PM
@@ -125,7 +126,7 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
             timeIterator = timeIterator.plusMinutes(60); // Corrected to 30-minute increment
         }
 
-        for (Session session : sessions) {
+        for (SessionDTO session : sessions) {
             processSession(session, timetableData);
         }
 
@@ -133,7 +134,7 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         TimetableTableModel model = (TimetableTableModel) timetableTable.getModel();
         model.setData(timetableData); // Update the model with new data
     }
-    private void processSession(Session session, Object[][] timetableData) {
+    private void processSession(SessionDTO session, Object[][] timetableData) {
         LocalTime scheduleStart = LocalTime.of(8, 0); // Assuming your timetable starts at 8 AM
         int slotDurationInMinutes = 60; // Assuming each slot is 60 minutes
 
@@ -241,16 +242,10 @@ public class TimetableView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void updateTotalDistanceDisplay(double totalDistance) {
-        totalDistanceLabel.setText("Total Distance: " + totalDistance + " km");
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("sessions".equals(evt.getPropertyName())) {
-            updateTimetableDisplay((List<Session>) evt.getNewValue());
-        } else if ("totalDistance".equals(evt.getPropertyName())) {
-            updateTotalDistanceDisplay((Double) evt.getNewValue());
+            updateTimetableDisplay((List<SessionDTO>) evt.getNewValue());
         }
     }
 }

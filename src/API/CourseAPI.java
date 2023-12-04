@@ -56,7 +56,7 @@ public class CourseAPI {
         }
     }
 
-    public static HashMap<String, HashMap<String, ArrayList<HashMap<String,Object>>>> getCourse(String course){
+    public static HashMap<String, HashMap<String, ArrayList<HashMap<String,Object>>>> getCourse(String course) throws IOException {
         /**
          * Returns a HashMap
          * Sample return
@@ -65,8 +65,15 @@ public class CourseAPI {
          *      LEC0501=[{Start=57600000, endtime=61200000, Day=2, building=BA}, {Start=57600000, endtime=4, Day=4, building=BA}]}
          */
 
-        JSONObject courseinfo = getCourseInfoRaw(course);
-        JSONObject payload = courseinfo.getJSONObject("payload");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("http://127.0.0.1:8000/"+course)
+                .get()
+                .addHeader("User-Agent", "insomnia/8.4.5")
+                .build();
+        Response response = client.newCall(request).execute();
+        JSONObject responseBody = new JSONObject(response.body().string());
+        JSONObject payload = responseBody.getJSONObject("payload");
         JSONObject pageableCourse = payload.getJSONObject("pageableCourse");
         JSONArray courses = pageableCourse.getJSONArray("courses");
         JSONObject fullCoursesInfo = (JSONObject) courses.get(0);
@@ -110,7 +117,6 @@ public class CourseAPI {
         /**
          Try it out!
          */
-        System.out.println((getCourse("CSC108H1 -F")));
     }
 
 

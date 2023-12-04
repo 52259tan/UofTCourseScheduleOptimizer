@@ -1,6 +1,6 @@
 package use_case;
 
-import entity.Session;
+import data_access.SessionDTO;
 
 import java.util.List;
 /**
@@ -8,22 +8,18 @@ import java.util.List;
  */
 public class TimeTableOutputData {
 
-    private List<Session> sessions;
-    private double distance;
+    private List<SessionDTO> sessions;
+
     /**
      * Constructs a new TimeTableOutputData object with the given list of courses and total distance.
      *
-     * @param sessions   The list of Course entity in the timetable.
-     * @param distance  The total distance of the timetable.
+     * @param sessions The list of Course entity in the timetable.
      */
-    public TimeTableOutputData(List<Session> sessions, double distance) {
+    public TimeTableOutputData(List<SessionDTO> sessions) {
         this.sessions = sessions;
-        this.distance = distance;
     }
-    public List<Session> getSessions() {
+    public List<SessionDTO> getSessions() {
         return sessions;
     }
-    public double getTotalDistance() {
-        return distance;
-    }
+
 }
