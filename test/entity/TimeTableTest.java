@@ -24,7 +24,7 @@ public class TimeTableTest {
 
     @Test
     public void testToString() {
-        System.out.println();
+        System.out.println(table);
     }
 
     @Test
