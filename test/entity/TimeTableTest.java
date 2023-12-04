@@ -14,9 +14,11 @@ public class TimeTableTest {
 
     @Before
     public void init() {
-        this.table = new TimeTable(List.of(),List.of(List.of("","","AA","")),List.of(List.of("","","AA","")),
-                List.of(List.of("","","AA","")),List.of(List.of("","","AA","")),
-                List.of(List.of("","","AA","")),1.0);
+        this.table = new TimeTable(List.of(),List.of(List.of("","","AA",""),List.of("","","AA","")),
+                List.of(List.of("","","AA",""),List.of("","","AA","")),
+                List.of(List.of("","","AA",""),List.of("","","AA","")),
+                List.of(List.of("","","AA",""),List.of("","","AA","")),
+                List.of(List.of("","","AA",""),List.of("","","AA","")),1.0);
     }
 
 
