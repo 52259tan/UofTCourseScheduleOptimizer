@@ -5,6 +5,7 @@ import entity.Course;
 import entity.TimeTable;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import static algorithm.Algorithm.getOptimalChoice;
  */
 public class MapRenderManagerTest {
     @Test
-    public void testDemo() {
+    public void testDemo() throws IOException {
         List<Course> courses = new ArrayList<>();
 
         Course csc207 = new Course(CourseAPI.getCourse("CSC207H1 -F"));
